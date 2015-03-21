@@ -1,0 +1,55 @@
+{% extends "JCLEMemoBundle::layout.html.twig" %}
+
+{% block jclememo_navbar %}
+    
+    {{ parent() }}
+    {% include "FOSUserBundle:Fmessage:message.html.twig" %}
+    
+{% endblock %}
+
+{% block jclememo_body %}
+    
+    <div class="row">
+        <form id="form_search" action="{{ path('jclememo_search') }}" method="POST" onsubmit="return control($('#recherche').val());" >
+            <div class="input-group">
+                <input id="recherche" name="recherche" type="text" class="form-control" autofocus="true"/> 
+                <span class="input-group-btn">
+                    <a href="#" class="btn btn-default btn-search" ><span class="glyphicon glyphicon-search"></span> Rechercher</a>
+                </span>
+            </div>
+        </form>
+    </div>
+
+    {% if is_granted ('ROLE_USER') %}
+        {{ render(controller("JCLEMemoBundle:Memo:carousel")) }} 
+    {% endif %}
+    
+    <!-- **************************************************** Exemples de tests :) **************************************************** -->
+{#    <code>exemple de {{ "<code></code>"|escape('html') }}</code>
+    <pre>exemple des {{ "<pre></pre>"|escape('html') }}</pre>
+    <div class="text-center">
+        <div class="visible-lg"><h4>Vous êtes actuellement sur un grand écran<h4></div> 
+        <div class="visible-md"><h4>Vous êtes actuellement sur un écran moyen<h4></div> 
+        <div class="visible-sm"><h4>Vous êtes actuellement sur une tablette<h4></div> 
+        <div class="visible-xs"><h4>Vous êtes actuellement sur un smartphone<h4></div>
+    </div>#}
+    <!-- **************************************************** Exemples de tests :) **************************************************** -->
+    
+    
+{#    <pre type="syntaxhighlighter" class="brush: php">
+    private function foo()
+    {
+            $test = 2;
+            // ça marche à la perfection, maintenant, passons à l'intégration ;)
+    }
+    </pre>
+    {{ "un [url=google.fr]lien vers gogle[/url] entre [php] du code $php // c'est cool [/php] et <strong>voila</strong> du c# [c#]private void maFonction(){};[/c#]"|striptags|sh|raw }}
+    #}
+{% endblock %}
+
+{% block javascript %}
+    {{ parent () }}
+    <script src="{{ asset('bundles/jclememo/js/mainAjax.js') }}" type="text/javascript" ></script>
+{% endblock %}
+
+

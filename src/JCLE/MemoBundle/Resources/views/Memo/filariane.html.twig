@@ -1,0 +1,15 @@
+<div class="row">
+    <ol class="breadcrumb">
+        <li><a tabindex="1" href="{{ path('jclememo_accueil')  }}">Accueil</a></li>
+        {% if note %}
+            <li><a tabindex="1" href="{{ path('jclememo_searchnotesbyicon', { 'iconAlt' : note.icon.alt } )  }}">{{ note.icon.alt }}</a></li>
+            <li class="active">{{ note.titre }}</li>
+        {% else %}
+            {% if icon is defined %}
+                <li class="active">{{ icon }}</li>
+            {% else %}
+                <li class="active">recherche</li>
+            {% endif %}
+        {% endif %}
+    </ol>
+</div>

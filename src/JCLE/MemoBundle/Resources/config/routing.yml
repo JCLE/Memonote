@@ -1,0 +1,59 @@
+jclememo_accueil:
+    path:     /
+    defaults: { _controller: JCLEMemoBundle:Memo:index }
+    
+jclememo_nouveau:
+    path:    /nouveau
+    defaults: { _controller: JCLEMemoBundle:Memo:nouveau }
+    
+jclememo_modifier:
+    path:    /modifier/{slug}
+    defaults: { _controller: JCLEMemoBundle:Memo:modifier }
+    
+jclememo_supprimer:
+    path:    /supprimer/{id}
+    defaults: { _controller: JCLEMemoBundle:Memo:supprimer }
+    
+jclememo_voir:
+    path:    /voir/{slug}
+    defaults: { _controller: JCLEMemoBundle:Memo:voir }
+    
+jclememo_search:
+    pattern: /search
+    defaults: { _controller: JCLEMemoBundle:Memo:search }
+    
+jclememo_mysearch:
+    pattern: /search/{value}/{page}
+    defaults: { _controller: JCLEMemoBundle:Memo:mysearch, value:null, page:1 }
+    
+jclememo_ajax_search:
+    pattern: /ajax
+    defaults: { _controller: JCLEMemoBundle:Memo:ajaxSearch }
+    options:
+        expose: true
+    
+jclememo_ajax_image:
+    pattern: /ajaxImage
+    defaults: { _controller: JCLEMemoBundle:Memo:ajaxImage }
+    options:
+        expose: true
+    
+jclememo_searchnotesbyicon:
+    pattern: /icon/{iconAlt}/{page}
+    defaults: { _controller: JCLEMemoBundle:Memo:searchNotesByIcon, page:1 }
+
+jclememo_ajouticon:
+    pattern: /ajouticon
+    defaults: { _controller: JCLEMemoBundle:Memo:ajoutIcon }
+    
+jclememo_voiricon:
+    pattern: /voiricon/{id}
+    defaults: { _controller: JCLEMemoBundle:Memo:voirIcon }
+    options:
+        expose: true
+    
+jclememo_suppricon:
+    pattern: /suppricon/{id}
+    defaults: { _controller: JCLEMemoBundle:Memo:supprIcon }
+    options:
+        expose: true

@@ -1,0 +1,62 @@
+
+jms_security_extra:
+    secure_all_services: false
+    expressions: true
+
+security:
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
+        JCLE\UserBundle\Entity\User: sha512
+        FOS\UserBundle\Model\UserInterface: sha512
+
+    role_hierarchy:
+        ROLE_USER:        [ ROLE_USER ]
+        ROLE_ADMIN:       [ ROLE_MODERATEUR ]
+        ROLE_SUPER_ADMIN: [ ROLE_ADMIN, ROLE_ALLOWED_TO_SW ]
+        
+    providers:
+#        in_memory: ( nom du fournisseur )
+#            memory: ( memory-> défini dans ce fichier || entity-> défini dans une entité bdd )
+#                users:
+#                    user:  { password: userpass, roles: [ 'ROLE_AUTEUR' ] }
+#                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+         fos_userbundle:
+#             entity: { class: SDZ\UserBundle\Entity\User, property: username }
+              id: fos_user.user_provider.username
+
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+            
+        main:
+            pattern:  ^/
+            anonymous: true
+            form_login:
+                provider: fos_userbundle
+                csrf_provider: form.csrf_provider
+                login_path: fos_user_security_login
+                check_path: fos_user_security_check
+#                default_target_path: /
+#                always_use_default_target_path: true
+#le ~ permet de mettre automatiquement ces veleurs de default
+            logout: true
+#                path: fos_user_security_logout
+#                target: /
+            remember_me:
+                key:    %secret% 
+                    #
+                lifetime: 31536000 
+                    # 365 jours en secondes
+                path: /
+                domain: ~ 
+                    # prend la valeur par default du domaine courant
+            
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/modifier/, role: ROLE_USER }
+        - { path: ^/supprimer/, role: ROLE_USER }
+#        - { path: ^/admin, roles: ROLE_ADMIN, ip: 127.0.0.1:88, requires_channel: https }

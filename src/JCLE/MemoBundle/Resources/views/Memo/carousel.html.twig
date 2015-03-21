@@ -1,0 +1,25 @@
+
+{% if icons is not empty %}
+    <div class="row">
+        <div class="text-center col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-12 col-lg-offset-0 col-lg-12">
+            <div id="carousel-icons" class="carousel slide" data-ride="carousel">
+              <!-- Wrapper for slides -->
+              <div class="carousel-inner">
+
+            {% for icon in icons %}
+                  <div class="carousel-height item text-center {% if loop.first %}active{% endif %}"><a href="{{path('jclememo_searchnotesbyicon', { 'iconAlt' : icon.alt } ) }}"><div><img src="{{ asset('uploads/icon/')~icon.id~'.png' }}" alt="{{ icon.alt }}"/></br>{{ icon.alt }}</div></a></div>
+            {% endfor %}
+
+              </div>
+
+              <!-- Controls -->
+              <a class="left carousel-control" href="#carousel-icons" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+              </a>
+              <a class="right carousel-control" href="#carousel-icons" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+              </a>
+            </div>
+        </div>
+    </div>
+{% endif %}

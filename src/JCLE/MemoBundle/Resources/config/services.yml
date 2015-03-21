@@ -1,0 +1,7 @@
+parameters:
+#    jcle_memo.example.class: JCLE\MemoBundle\Example
+
+services:
+#    jcle_memo.example:
+#        class: %jcle_memo.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

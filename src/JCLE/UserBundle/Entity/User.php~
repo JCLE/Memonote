@@ -1,0 +1,181 @@
+<?php
+
+namespace SDZ\UserBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Entity\User as BaseUser;
+
+/**
+ * User
+ *
+ * @ORM\Table(name="sdz_user")
+ * @ORM\Entity
+ */
+class User extends BaseUser
+{
+    /**
+     *
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+//    /**
+//     *
+//     * @ORM\Column(name="username", type="string")
+//     */
+//    protected $username;
+//    
+//    /**
+//     *
+//     * @ORM\Column(name="password", type="string")
+//     */
+//    protected $password;
+//    
+//    /**
+//     *
+//     * @ORM\Column(name="email", type="string")
+//     */
+//    protected $email;
+//
+//    
+//    /**
+//     *
+//     * @ORM\Column(type="boolean", name="enabled")
+//     */
+//    protected $enabled;
+//    
+//    /**
+//     *
+//     * @ORM\Column(type="boolean", name="locked")
+//     */
+//    protected $locked;
+
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return User
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Get username
+     *
+     * @return string 
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return User
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string 
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     * @return User
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean 
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Set locked
+     *
+     * @param boolean $locked
+     * @return User
+     */
+    public function setLocked($locked)
+    {
+        $this->locked = $locked;
+
+        return $this;
+    }
+
+    /**
+     * Get locked
+     *
+     * @return boolean 
+     */
+    public function getLocked()
+    {
+        return $this->locked;
+    }
+}

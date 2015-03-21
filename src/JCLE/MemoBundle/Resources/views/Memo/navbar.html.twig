@@ -1,0 +1,23 @@
+
+<div class="row">
+    <ul class="nav nav-pills nav-justified">
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" tabindex="-1">Bienvenue {{ app.user.username }} <span class="caret"></span></a>
+                <ul class="dropdown-menu dropdown col-lg-12">
+                  <li class="text-center"><a class="glyphicon glyphicon-wrench" href="{{ path('fos_user_profile_show') }}" tabindex="-1"> Mon Compte </a></li>
+                  <li class="text-center"><a class="glyphicon  glyphicon-off" href="{{ path('fos_user_security_logout') }}" tabindex="-1"> Déconnexion </a></li>
+                </ul>
+            </li>
+            {% if is_granted('ROLE_USER') %}
+    {#            <li><a class="" href="{{ path('jclememo_ajouticon') }}" tabindex="-1">Ajouter un icone</a></li>#}
+                <li><a class="" href="{{ path('jclememo_nouveau') }}" tabindex="-1">Ajouter une note</a></li>            
+            {% endif %}
+        {% else %}
+            <li><a class="" href="{{ path("fos_user_security_login") }}" tabindex="-1">S'authentifier</a></li>
+            <li><a class="" href="{{ path("fos_user_registration_register") }}" tabindex="-1">S'enregistrer</a></li>
+        {% endif %}
+            {#{% if is_granted('ROLE_AUTEUR') %}
+                <li><a href="{{ path('sdzblog_ajouter') }}">Ajouter un article</a></li>
+            {% endif %}#}
+    </ul>
+</div>

@@ -1,0 +1,83 @@
+
+{% extends 'JCLEMemoBundle::layout.html.twig' %}
+
+{% set seeBreadcrumb = true %}
+
+{#{% block jclememo_navbar %}
+    {{ parent() }}
+    {% include "JCLEMemoBundle:Memo:flashmessage.html.twig" %}
+{% endblock %}#}
+
+
+{% block jclememo_body %}
+
+    {% if note is iterable %}
+        
+{#        {{ dump(note) }}
+        {{ dump(pagination) }}#}
+                
+        
+{#        <div class="row">
+            <table class="table table-hover">
+                <tbody>
+                {% for aNote in note %}
+                    <tr onclick="window.location.href='{{ path('jclememo_voir',{ 'slug' :  aNote.slug } ) }}'">
+                            <td class="col-lg-5">{{ aNote.date|date('d/m/Y h:i:s') }}</td>
+                            <td class="col-lg-7"><a href="{{ path('jclememo_voir',{ 'slug' :  aNote.slug } ) }}">{{ aNote.titre}}</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>#}
+        
+        <div class="row">
+            <table class="table table-hover">
+                <tbody>
+                {% for note in pagination %}
+                    <tr onclick="window.location.href='{{ path('jclememo_voir',{ 'slug' :  note.slug } ) }}'">
+                            <td class="col-lg-5">{{ note.date|date('d/m/Y h:i:s') }}</td>
+                            <td class="col-lg-7"><a href="{{ path('jclememo_voir',{ 'slug' :  note.slug } ) }}">{{ note.titre}}</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>        
+
+    <div class="navigation text-center">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+    {% else %}
+        <div class="row">
+            <div id="panel" class="panel panel-primary">
+                <div class="panel-heading clearfix" style="vertical-align:middle;">
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <div class='pull-right'>
+                            <button onclick="location.href='{{ path('jclememo_modifier',{ 'slug' :  note.slug } ) }}';" class="btn btn-default btn-xs mini-icon"><span class="glyphicon glyphicon-pencil"></span></button>
+                            <button onclick="ConfirmDelete('{{ path('jclememo_supprimer',{ 'id' :  note.id } ) }}','Voulez-vous vraiment supprimer la Note : \n\n'+'{{ note.titre }}');" class="btn btn-default btn-xs mini-icon"><span class="glyphicon glyphicon-trash"></span></button>
+                        </div>
+                    {% endif %}
+                    <div class="panel-title">
+                        <img id="icon" src="{{ asset('uploads/icon/')~note.icon.id~'.png' }}" alt="{{ note.icon.alt }}" class="pull-left"/>
+                        <h3>{{ ' '~note.titre}}</h3>
+                    </div>
+                </div>
+                <div class="panel-body">
+{#                        {{ note.description|striptags|sh|raw|nl2br}}#}
+                            {{ note.description|sh|raw|nl2br}}
+                    {% if note.notes is not empty %}
+                        </br></br>
+                        <div class="thumbnail">
+                            <p>En lien avec cette note : </p>
+                            {% for note_en_lien in note.notes %}
+                                <a class="btn btn-default" href="{{ path("jclememo_voir",{ 'slug' : note_en_lien.slug }) }}">{{ note_en_lien.titre }}</a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="panel-footer">Crée le {{ note.date|date('d/m/Y h:i:s') }} par {{ note.createur }}</div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

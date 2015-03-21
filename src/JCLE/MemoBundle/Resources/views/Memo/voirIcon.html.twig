@@ -1,0 +1,60 @@
+
+{% extends 'JCLEMemoBundle::layout.html.twig' %}
+
+{#{% block jclememo_navbar %}
+    {{ parent() }}
+    {% include "JCLEMemoBundle:Memo:flashmessage.html.twig" %}
+{% endblock %}#}
+
+{% block jclememo_body %}
+{#<button type="button" class="close" href="#">&times;</button>#}
+<div class="row">
+    <div class='pull-right'>
+        <button onclick="ConfirmDelete('{{ path('jclememo_suppricon',{ 'id' :  id } ) }}','Voulez-vous vraiment supprimer cet icone ainsi que toutes les notes reliées à ce dernier ?');" class="btn btn-default btn-xs mini-icon"><span class="glyphicon glyphicon-remove"></span></button>
+    </div>
+    <form method="POST" {{ form_enctype(form) }}  class="form-horizontal well">
+            {{ form_errors(form) }}  
+        
+            <div id="icon-actuel" class="form-group">
+{#                <label class="col-sm-2 col-lg-2 control-label">{{ form_label(form.alt) }}</label>#}
+                <div class="col-sm-offset-1 col-lg-offset-1 col-sm-1 col-lg-1">
+                    <img id="icon-edit" src="{{ asset('uploads/icon/')~id~'.png' }}" alt="icon" title="modifier"/>
+                </div>
+                <div class="col-sm-9 col-lg-9">
+                    {{ form_widget(form.alt, { 'attr': { 'class': 'form-control' } } ) }}
+                    {{ form_errors(form.alt) }}
+                </div>
+            </div>
+{#        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom">Tooltip on bottom</button>#}
+        
+            <div id="icon-change" class="form-group" style="display:none;">
+                <label class="col-sm-offset-1 col-lg-offset-1 col-sm-4 col-lg-4 control-label">{{ form_label(form.fichier, 'Selectionnez le nouvel icone : ' )}}</label>
+                <div class="col-sm-6 col-lg-6">
+                    {{ form_widget(form.fichier, { 'attr': { 'class': 'form-control' } } ) }}
+                    {{ form_errors(form.fichier) }}
+                </div>
+            </div>
+
+            {{ form_rest(form) }}
+
+            <div class="form-group text-center">
+                <label class="control-label">
+                    <input class="btn btn-default" type="submit" />
+                </label>
+
+                <label>
+                    {% set chemin = chemin|default(path('jclememo_accueil')) %}
+                    {% if note is defined %} 
+                        {% set chemin = path('jclememo_voir', { 'slug' : note.slug } ) %}
+                    {% endif %}
+                    <a href="{{ chemin }}" >annuler</a>
+                </label>
+
+            </div>
+
+            {{ form_end(form) }}
+
+    </form>
+</div>
+
+{% endblock jclememo_body %}

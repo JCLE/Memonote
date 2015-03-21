@@ -1,0 +1,27 @@
+
+{% extends "::layout.html.twig" %}
+{% set hideNavBar = hideNavBar|default(false) %} {# barre de logs et d'ajout de notes #}
+{% set seeBreadcrumb = seeBreadcrumb|default(false) %} {# fil d'ariane, miettes de pain en anglais #}
+
+{% block jclememo_navbar %}
+    
+    {% if not hideNavBar %}
+        {{ include("JCLEMemoBundle:Memo:navbar.html.twig") }}
+    {% endif %}
+    
+    {% if seeBreadcrumb %}
+        {% if note is iterable %}
+            {{ include( 'JCLEMemoBundle:Memo:filariane.html.twig', { 'note': null } ) }}
+        {% else %}
+            {{ include( 'JCLEMemoBundle:Memo:filariane.html.twig', { 'note': note } ) }}
+        {% endif %}
+    {% endif %}
+    
+    {% include "JCLEMemoBundle:Memo:flashmessage.html.twig" %}
+    
+{% endblock %}
+
+{#{% block javascript %}
+    {{ parent () }}
+    <script src="{{ asset('bundles/jclememo/js/memo.js') }}" type="text/javascript" ></script>
+{% endblock %}#}

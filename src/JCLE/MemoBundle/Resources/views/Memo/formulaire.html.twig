@@ -1,0 +1,78 @@
+<div class="row">
+    <form method="POST" {{ form_enctype(form) }}  class="form-horizontal well">
+            {{ form_errors(form) }} 
+        {% if form.icon is defined %}
+            <div class="form-group">                
+                <label class="col-sm-2 control-label">{{ form_label(form.icon, 'Icone') }}</label>
+                <div id="icon-file">
+                    <div class="col-sm-1" id="recept-img"><img src="{{ asset('bundles/jclememo/images/loader.gif') }}" id="icon"></div>            
+                    <div class="col-sm-7">
+                        {{ form_widget(form.icon, { 'attr': { 'class': 'form-control target-img'} } ) }}
+                        {{ form_errors(form.icon) }}
+                    </div>
+                    <div class="item col-sm-2 target-img">
+                        <a class="control-label glyphicon glyphicon-plus" href="{{ path('jclememo_ajouticon') }}" alt="Ajouter" ></a>
+                        <a class="control-label glyphicon glyphicon-pencil" href="#" onclick="GenererRoute('jclememo_voiricon',$('#jcle_memobundle_note_icon').val());" alt="Modifier"></a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p class='text-center'><strong><i>/!\ Prévoir un message incitant à créer un icone avant toute création de note car l'icone est obligatoire ou mettre icone obligatoires de base</i></strong></p>
+        {% endif %}
+
+            <div class="form-group">
+                <label class="col-sm-2 col-lg-2 control-label">{{ form_label(form.titre) }}</label>
+                <div class="col-sm-10 col-lg-10">
+                    {{ form_widget(form.titre, { 'attr': { 'class': 'form-control' } } ) }}
+                    {{ form_errors(form.titre) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ form_label(form.description) }}</label>
+                <div class="col-sm-10">
+                    {{ form_widget(form.description,{ 'attr' : { 'rows' : '6' , 'class': 'form-control'} } ) }}
+                    {{ form_errors(form.description) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ form_label(form.tag) }}</label>
+                <div class="col-sm-10">
+                    {{ form_widget(form.tag, { 'attr': { 'class': 'form-control' } } ) }}
+                    {{ form_errors(form.tag) }}
+                </div>
+            </div>
+
+        {% if form.notes is defined %}
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{ form_label(form.notes) }}</label>
+                <div class="col-sm-8">
+                    {{ form_widget(form.notes, { 'attr': { 'class': 'form-control' } } ) }}
+                    {{ form_errors(form.notes) }}
+                </div>
+                <div class="col-sm-2">
+                    <a href="#" onclick="ResetSelect('#jcle_memobundle_note_notes')" style="vertical-align: central;">Reinitialiser</a>
+                </div>
+            </div>
+        {% endif %}
+
+            {{ form_rest(form) }}
+
+            <div class="form-group text-center">
+                <label class="control-label">
+                    <input class="btn btn-default" type="submit" />
+                </label>
+
+                <label>
+                    {% set chemin = chemin|default(path('jclememo_accueil')) %}
+                    {% if note is defined %} 
+                        {% set chemin = path('jclememo_voir', { 'slug' : note.slug } ) %}
+                    {% endif %}
+                    <a href="{{ chemin }}" >annuler</a>
+                </label>
+
+            </div>
+
+            {{ form_end(form) }}
+    </form>
+</div>

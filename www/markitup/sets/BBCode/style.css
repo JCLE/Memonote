@@ -1,0 +1,90 @@
+/* -------------------------------------------------------------------
+// markItUp!
+// By Jay Salvat - http://markitup.jaysalvat.com/
+// ------------------------------------------------------------------*/
+
+.markItUpButton
+{
+    margin:auto 2px auto 2px;
+}
+
+.markItUp .markItUpButton1 a {
+	background-image:url(images/bold.png);
+}
+.markItUp .markItUpButton2 a {
+	background-image:url(images/italic.png);
+}
+.markItUp .markItUpButton3 a {
+	background-image:url(images/text_underline.png);
+}
+.markItUp .markItUpButton4 a {
+	background-image:url(images/text_strikethrough.png);
+}
+
+
+.markItUp .image a {
+	background-image:url(images/image.png); 
+}
+.markItUp .lien a {
+	background-image:url(images/link.png);
+}
+.markItUp .php a {
+	background-image:url(images/php.gif);
+}
+.markItUp .csharp a {
+	background-image:url(images/csharp.png);
+}
+.markItUp .clean a {
+	background-image:url(images/cross.png);
+}
+.markItUp .center a {
+	background-image:url(images/text_align_center.png);
+}
+.markItUp .left a {
+	background-image:url(images/text_align_left.png);
+}
+.markItUp .right a {
+	background-image:url(images/text_align_right.png);
+}
+.markItUp .justify a {
+	background-image:url(images/text_align_justify.png);
+}
+.markItUp .h1 a {
+	background-image:url(images/text_heading_1.png);
+}
+.markItUp .h2 a {
+	background-image:url(images/text_heading_2.png);
+}
+.markItUp .h3 a {
+	background-image:url(images/text_heading_3.png);
+}
+.markItUp .h4 a {
+	background-image:url(images/text_heading_4.png);
+}
+.markItUp .h5 a {
+	background-image:url(images/text_heading_5.png);
+}
+.markItUp .h6 a {
+	background-image:url(images/text_heading_6.png);
+}
+.markItUp .color_red a {
+	background-image:url(images/page_white_code_red.png);
+}
+.markItUp .kbd a {
+	background-image:url(images/keyboard.png);
+}
+.markItUp .css a {
+	background-image:url(images/css.png);
+}
+.markItUp .xml a {
+	background-image:url(images/xml.png);
+}
+.markItUp .js a {
+	background-image:url(images/javascript.png);
+}
+.markItUp .sql a {
+	background-image:url(images/sql.png);
+}
+.markItUp .pre a {
+	background-image:url(images/page_white_code.png);
+}

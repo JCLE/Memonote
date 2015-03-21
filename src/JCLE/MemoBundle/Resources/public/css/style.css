@@ -1,0 +1,78 @@
+
+h1>a:hover, .item>a:hover
+{
+    text-decoration:none;
+}
+
+textarea
+{
+    resize:vertical;
+}
+
+#icon
+{
+    transform:translateY(-25%); 
+    margin-right:5px;
+    height:50px;
+}
+
+.mini-icon
+{
+    border-radius: 50%;
+}
+
+#recept-img, .target-img
+{
+    margin-top: 10px;
+}
+
+.carousel-height
+{
+    height: 70px;
+    margin-top: 5px;
+}
+
+kbd
+{
+    -moz-border-radius:3px;
+    -moz-box-shadow:0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;
+    -webkit-border-radius:3px;
+    -webkit-box-shadow:0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;
+    background-color:#f7f7f7;
+    border:1px solid #ccc;
+    border-radius:3px;
+    box-shadow:0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;
+    color:#333;
+    display:inline-block;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:11px;
+    line-height:1.4;
+    margin:0 .1em;
+    padding:.1em .6em;
+    text-shadow:0 1px 0 #fff;
+}
+
+/*.center-table
+{
+  margin: 0 auto !important;
+  float: none !important;
+}*/
+
+
+/* Pour les tests, mais à supprimer après */
+
+/*.container
+{
+    border:1px solid blue;
+}
+div
+{
+    border:1px solid red;
+}
+h1
+{
+    border:1px solid red;
+}*/
+
+
+/* ************************************** */

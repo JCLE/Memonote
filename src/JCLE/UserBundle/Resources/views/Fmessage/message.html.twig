@@ -1,0 +1,17 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% for type, messages in app.session.flashbag.all() %}
+    <div class="alert alert-{{ type }} success fade in flash_message tarace">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>     
+
+{% endfor %}
+
+{#{% block javascript %}
+    {{ parent() }}
+    <script>alert('test');</script>
+    <script src="{{ asset('bundles/jclememo/js/memo.js') }}" type="text/javascript" ></script>
+{% endblock %}#}
