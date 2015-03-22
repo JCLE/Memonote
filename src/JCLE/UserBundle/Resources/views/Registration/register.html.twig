@@ -2,12 +2,44 @@
 
 {% block jclememo_body %}
 {#{% include "FOSUserBundle:Registration:register_content.html.twig" %}#}
-<div class="text-center well">
-    <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST">
-            {{ form_widget(form) }}
-            <div>
-                <input type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />
+<div class="row">
+    <form class="form-horizontal well text-center" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST">
+            {{ form_start(form) }}
+            
+        <div class="form-group">
+            <label class="col-sm-offset-2 col-lg-offset-2 col-sm-2 col-lg-2 control-label">{{ form_label(form.email) }}</label>
+            <div class="col-sm-6 col-lg-6">
+                {{ form_widget(form.email, { 'attr': { 'class': 'form-control' } } ) }}
+                {{ form_errors(form.email) }}
             </div>
+        </div>
+            
+        <div class="form-group">
+            <label class="col-sm-offset-2 col-lg-offset-2 col-sm-2 col-lg-2 control-label">{{ form_label(form.username) }}</label>
+            <div class="col-sm-6 col-lg-6">
+                {{ form_widget(form.username, { 'attr': { 'class': 'form-control' } } ) }}
+                {{ form_errors(form.username) }}
+            </div>
+        </div>
+            
+        <div class="form-group">
+            <label class="col-sm-offset-2 col-lg-offset-2 col-sm-2 col-lg-2 control-label">{{ form_label(form.plainPassword.first) }}</label>
+            <div class="col-sm-6 col-lg-6">
+                {{ form_widget(form.plainPassword.first, { 'attr': { 'class': 'form-control' } } ) }}
+                {{ form_errors(form.plainPassword.first) }}
+            </div>
+        </div>
+            
+        <div class="form-group">
+            <label class="col-sm-offset-2 col-lg-offset-2 col-sm-2 col-lg-2 control-label">{{ form_label(form.plainPassword.second) }}</label>
+            <div class="col-sm-6 col-lg-6">
+                {{ form_widget(form.plainPassword.second, { 'attr': { 'class': 'form-control' } } ) }}
+                {{ form_errors(form.plainPassword.second) }}
+            </div>
+        </div>
+        <input class="btn btn-default" type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />
+        
+        {{ form_end(form) }}
     </form>
 </div>
 {% endblock %}

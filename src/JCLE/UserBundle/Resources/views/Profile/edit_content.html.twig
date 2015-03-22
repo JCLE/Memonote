@@ -1,8 +1,31 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
-    {{ form_widget(form) }}
-    <div>
-        <input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
+<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit form-horizontal text-center well">
+    {{ form_start(form) }}
+    
+    <div class="form-group">
+        <label class="col-sm-offset-2 col-lg-offset-2 col-sm-2 col-lg-2 control-label">{{ form_label(form.username) }}</label>
+        <div class="col-sm-6 col-lg-6">
+            {{ form_widget(form.username, { 'attr': { 'class': 'form-control' } } ) }}
+            {{ form_errors(form.username) }}
+        </div>
     </div>
+    <div class="form-group">
+        <label class="col-sm-offset-2 col-lg-offset-2 col-sm-2 col-lg-2 control-label">{{ form_label(form.email) }}</label>
+        <div class="col-sm-6 col-lg-6">
+            {{ form_widget(form.email, { 'attr': { 'class': 'form-control' } } ) }}
+            {{ form_errors(form.email) }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-offset-2 col-lg-offset-2 col-sm-2 col-lg-2 control-label">{{ form_label(form.current_password) }}</label>
+        <div class="col-sm-6 col-lg-6">
+            {{ form_widget(form.current_password, { 'attr': { 'class': 'form-control' } } ) }}
+            {{ form_errors(form.current_password) }}
+        </div>
+    </div>
+    <input class="btn btn-default" type="submit" value="{{ 'profile.edit.submit'|trans }}" />
+    <a href="{{ path('jclememo_accueil') }}">annuler</a>
+            
+    {{ form_end(form) }}
 </form>
