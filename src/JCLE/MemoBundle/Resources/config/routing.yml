@@ -18,13 +18,15 @@ jclememo_voir:
     path:    /voir/{slug}
     defaults: { _controller: JCLEMemoBundle:Memo:voir }
     
-jclememo_search:
-    pattern: /search
-    defaults: { _controller: JCLEMemoBundle:Memo:search }
+jclememo_prerecherche:
+    pattern: /prerecherche
+    defaults: { _controller: JCLEMemoBundle:Memo:prerecherche }
     
-jclememo_mysearch:
-    pattern: /search/{value}/{page}
-    defaults: { _controller: JCLEMemoBundle:Memo:mysearch, value:null, page:1 }
+jclememo_recherche:
+    pattern: /recherche/{page}/{value}
+    defaults: { _controller: JCLEMemoBundle:Memo:recherche, value:null, page:1 }
+    requirements:
+        value: .+
     
 jclememo_ajax_search:
     pattern: /ajax
@@ -39,8 +41,10 @@ jclememo_ajax_image:
         expose: true
     
 jclememo_searchnotesbyicon:
-    pattern: /icon/{iconAlt}/{page}
+    pattern: /icon/{page}/{iconAlt}
     defaults: { _controller: JCLEMemoBundle:Memo:searchNotesByIcon, page:1 }
+    requirements:
+        iconAlt: .+
 
 jclememo_ajouticon:
     pattern: /ajouticon

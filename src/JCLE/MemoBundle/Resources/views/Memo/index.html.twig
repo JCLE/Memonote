@@ -10,7 +10,7 @@
 {% block jclememo_body %}
     
     <div class="row">
-        <form id="form_search" action="{{ path('jclememo_search') }}" method="POST" onsubmit="return control($('#recherche').val());" >
+        <form id="form_search" action="{{ path('jclememo_prerecherche') }}" method="POST" onsubmit="return control($('#recherche').val());" >
             <div class="input-group">
                 <input id="recherche" name="recherche" type="text" class="form-control" autofocus="true"/> 
                 <span class="input-group-btn">

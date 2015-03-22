@@ -26,9 +26,9 @@ $( "#recherche" ).autocomplete({
               add($.map(data, function(item) {
                     return {
                         value : item.value,
-                        desc : item.desc,
+//                        desc : item.desc,
                         icon : item.icon,
-                        label : item.label
+//                        label : item.label
                     }
                 }));
             }
@@ -42,7 +42,7 @@ $( "#recherche" ).autocomplete({
 .autocomplete( "instance" )._renderItem = function( ul, item) {
             return $( "<li>" )
 //    .append( "<a><img src=\"/Symfony/web/"+item.icon+"\" /> " +  item.label +"</a>" )
-    .append( "<a><img src=\""+pathImgDirectory+item.icon+".png\" /> " +  item.label +"</a>" )
+    .append( "<a><img src=\""+pathImgDirectory+item.icon+".png\" /> " +  item.value +"</a>" )
     .appendTo( ul );
 };
 

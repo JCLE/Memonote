@@ -10,7 +10,7 @@ use JCLE\MemoBundle\Entity\Note;
 use JCLE\MemoBundle\Entity\Icon;
 //use JCLE\MemoBundle\Form\NoteType;
 //use JCLE\MemoBundle\Form\IconType;
-use JCLE\MemoBundle\Form\IconFileType;
+//use JCLE\MemoBundle\Form\IconFileType;
 
 
 class MemoController extends Controller
@@ -46,7 +46,6 @@ class MemoController extends Controller
      */
     public function nouveauAction(Request $request)
     {
-        // nouveau commit ?
 //        $note = new Note();
 //        $user = $this->getUser();
 //        $em = $this->get('doctrine.orm.entity_manager');
@@ -255,34 +254,73 @@ class MemoController extends Controller
     public function ajaxSearchAction(Request $request)
     {
         $user = $this->getUser();
+        $max_result = 7;
+        $tableau = array();
+        $bla = array();
         
         if($user != 'anon.')
         {
-            $search = $request->get('recherche');
+            $recherche = $request->get('recherche');
             // Conversion de la recherche en tableau de mots
-            $searches = array_filter(explode(' ',$search));
-
+            $mots_cles = array_filter(explode(' ',$recherche));
+            
             if($request->isXmlHttpRequest())
             {
                 $em = $this->getDoctrine()->getManager();
-                $recherche = $em->getRepository('JCLEMemoBundle:Note')
-                                ->recherche($searches,$user,1,10);
-
-                foreach ($recherche as $value)
-                {
-                    $tableau[] = array(
-                            'label' => $value->getTitre(),
-                            'value' => $value->getTitre(),
-                            'desc' => $value->getDescription(),
-                            'icon' => $value->getIcon()->getId()
-                        );
-                }
-
+                $notes = $em->getRepository('JCLEMemoBundle:Note')
+                                ->recherche($mots_cles,$user);
+                
+                $tableau = $this->transformResults($notes, $mots_cles, $max_result);
+                
                 return new JsonResponse($tableau); 
             }
         }
     }
     
+    /**
+     * Créer un tableau servant à l'autocompletion principale
+     * @param type $notes -> Les notes récupérées qui ont au moins un mot cle correspondant
+     * @param type $mots_cles -> Tableau de mots cles
+     * @param type $max_result -> Nbre Max a afficher
+     * @return array -> Tableau [icon][value][pertinence]
+     */
+    public function transformResults($notes, $mots_cles, $max_result)
+    {
+        $tableau = array();
+        
+        foreach ($notes as $value)
+        {
+            $tableau[] = array(
+                'icon' => $value->getIcon()->getId(),
+                'value' => $value->getTitre(),
+                'pertinence' => $this->calculPertinence($value->getDescription().' '.$value->getTitre().' '.$value->getIcon()->getAlt(), $mots_cles)
+                );
+        }
+        usort($tableau, function ($a, $b) {
+            return strnatcmp($a['pertinence'], $b['pertinence']);
+        });
+        // inverse l'ordre du tableau
+        $tableau = array_reverse($tableau);
+        // limite le nombre de résultats
+        $tableau = array_slice($tableau,0,$max_result);
+        
+        return $tableau;
+    }
+    
+    /**
+     * Calcul le nombre de fois ou les mots cles sont retrouvés dans la chaine donnée
+     * @param type $chaine_de_recherche -> La chaine à controler
+     * @param type $tab_de_mots_cles -> Le tableau de mots cles a trouver
+     * @return int -> nombre d'occurence
+     */
+    public function calculPertinence ($chaine_de_recherche, $tab_de_mots_cles)
+    {
+        $pertinence = 0;
+        foreach ($tab_de_mots_cles as $value) {
+            $pertinence += mb_substr_count($chaine_de_recherche, $value);
+        }
+        return $pertinence;
+    }
     
 //    public function ajaxImageAction(Request $request)
 //    {
@@ -302,15 +340,19 @@ class MemoController extends Controller
 //        }
 //    }
     
-    // A MODIFIEr ****************************************** CreatePagination **********************************************************************
+    // A MODIFIER ****************************************** CreatePagination **********************************************************************
     
-    public function searchAction(Request $request)
+    public function prerechercheAction(Request $request)
     {
         $value = $request->get('recherche');
         
+//        dump($request);
+//        
+//        return new Response('<body>pause search</body>');
+        
         if($value != "")
         {
-            return $this->redirect($this->generateUrl('jclememo_mysearch', array(
+            return $this->redirect($this->generateUrl('jclememo_recherche', array(
                 'value' => $value
                     )));
         }
@@ -325,7 +367,7 @@ class MemoController extends Controller
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function mysearchAction($value,$page=1, $maxParPage=10, Request $request)
+    public function rechercheAction($value,$page=1, $maxParPage=4, Request $request)
     {
         $user = $this->getUser();
 
@@ -351,13 +393,13 @@ class MemoController extends Controller
         {
             // Détachement de la recherche mot à mot
             $searches = array_filter(explode(' ',$value));
-            $recherche = $depot->recherche($searches,$user,$page,$maxParPage);
+            $recherche = $depot->recherche($searches, $user);
 
             foreach ($recherche as $key => $_value)
             {
                 $note[$key] = $_value;
             }
-            
+
             if($note)
             {
                 $paginator  = $this->get('knp_paginator');
@@ -366,12 +408,6 @@ class MemoController extends Controller
                     $request->query->get('page', $page)/*page number*/,
                     $maxParPage/*limit per page*/
                 );
-            
-//            $count_recherche = $depot->countRecherche($searches,$user,$page,$maxParPage); 
-            
-//            $route = 'jclememo_search';
-//            $pagination = $this->createPagination($value,$page, $maxParPage, $count_recherche, $route);
-            
             
                 return $this->render('JCLEMemoBundle:Memo:voir.html.twig', array(
                         'note' => $note
@@ -383,6 +419,7 @@ class MemoController extends Controller
             {
                 $this->get('session')->getFlashBag()->add('info-warning', 'aucune note correspondant à la recherche : '.$value);
                 return $this->redirect($this->generateUrl('jclememo_accueil'));
+
             }
           }
             
@@ -430,20 +467,14 @@ class MemoController extends Controller
 //                );
 //        }
         
-        public function searchNotesByIconAction($iconAlt, $page=1, $maxParPage=10, Request $request)
+        public function searchNotesByIconAction($iconAlt, $page=1, $maxParPage=4, Request $request)
         {
             $username = $this->getUser()->getUsername();
             
             $em = $this->getDoctrine()
                        ->getManager()
                        ->getRepository('JCLEMemoBundle:Note');
-            
-            $note = $em->findByIcon($iconAlt,$username, $page, $maxParPage);
-            
-//            $count_Icon = $em->countIcon($iconAlt,$username);            
-//            $route = 'jclememo_searchnotesbyicon';
-//            
-//            $pagination = $this->createPagination($page, $maxParPage, $count_Icon, $route);
+            $note = $em->findByIcon($iconAlt,$username);
             
             if($note)
             {
@@ -451,13 +482,13 @@ class MemoController extends Controller
                 $pagination = $paginator->paginate(
                     $note,
                     $request->query->get('page', $page)/*page number*/,
-                    $maxParPage/*limit per page*/
+                        $maxParPage/*limit per page*/
                 );
             
                 return $this->render('JCLEMemoBundle:Memo:voir.html.twig', array(
-                    'note' => $note   
-                    ,'icon' => $iconAlt
-                    ,'pagination' => $pagination
+                        'note' => $note   
+                        ,'icon' => $iconAlt
+                        ,'pagination' => $pagination
                     ));
             }
             else
@@ -467,9 +498,9 @@ class MemoController extends Controller
             }
         }
         
-        public function filarianeAction(Note $note)
-        {
-            return new Response($note->getIcon()->getAlt());
-        }
+//        public function filarianeAction(Note $note)
+//        {
+//            return new Response($note->getIcon()->getAlt());
+//        }
         
 }

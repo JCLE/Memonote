@@ -13,11 +13,11 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class NoteRepository extends EntityRepository
 {   
-    public function recherche ( $recherche, $username, $page, $maxParPage )
+    public function recherche ( $recherche, $username)
     {
             $qb = $this->_em->createQueryBuilder();
             $qb->select('n')
-            ->from('JCLEMemoBundle:Note', 'n');
+                ->from('JCLEMemoBundle:Note', 'n');
           
             $qb = $this->requeteDeRecherche($recherche, $username, $qb);
             
@@ -25,40 +25,48 @@ class NoteRepository extends EntityRepository
 //                ->setMaxResults($maxParPage);
         
         return new Paginator($qb);
+//        return $qb->getQuery()->getResult();
     }
     
-    public function countRecherche ( $recherche, $username )
-    {
-            $qb = $this->_em->createQueryBuilder();
-           $qb->select('COUNT (n.id)')
-            ->from('JCLEMemoBundle:Note', 'n');
-           
-           $qb = $this->requeteDeRecherche($recherche, $username, $qb);
-        
-        return $qb->getQuery()->getSingleScalarResult();
-    }
+//    public function countRecherche ( $recherche, $username )
+//    {
+//            $qb = $this->_em->createQueryBuilder();
+//           $qb->select('COUNT (n.id)')
+//            ->from('JCLEMemoBundle:Note', 'n');
+//           
+//           $qb = $this->requeteDeRecherche($recherche, $username, $qb);
+//        
+//        return $qb->getQuery()->getSingleScalarResult();
+//    }
     
     public function requeteDeRecherche ($recherche, $username, $qb)
     {
+        // TODO : Correction de la recherche ajax, ne fonctionne pas comme je le veux
         foreach ($recherche as $key => $value )
             {
-                if($key == 0)
+                // TODO : factoriser cette condition en regardant dans mes cours AFPA pour la recupération des noms de méthodes que julien m'a montré
+                if($key == 0) // premiere entrée du tableau
                 { $qb->where($qb->expr()->like('n.titre', ':recherche'.$key)); }
-                else
-                { $qb->andWhere($qb->expr()->like('n.titre', ':recherche'.$key)); }
+                else // autres entrées du tableau
+                { $qb->orWhere($qb->expr()->like('n.titre', ':recherche'.$key)); }
                 
                 $qb->orWhere($qb->expr()->like('n.tag', ':recherche'.$key))
                    ->orWhere($qb->expr()->like('n.description', ':recherche'.$key))
+                   ->orWhere($qb->expr()->like('i.alt', ':recherche'.$key))
                     ->setParameter('recherche'.$key, '%'.$recherche[$key].'%' );
                 // la key me sers à identifier le mot a substituer ex :     :recherche1 va recevoir la valeur du 1er element et ainsi de suite
             }
             $qb->andWhere('n.createur = :username')
-            ->setParameter('username', $username );
+                ->setParameter('username', $username )
+                ->Join('n.icon','i');
+//                ->setFirstResult(($page-1)* $max_result)
+//                ->setMaxResults($max_result)
+            dump($qb->getQuery());
             return $qb;
     }
     
     /**
-     * Rechercher les icones comprenant des notes pour un utilisateur spécifié
+     * Rechercher les icones comprenant des notes pour un utilisateur spécifié, utilisé par le carousel
      * @param type $user
      * @return array
      */
@@ -75,8 +83,12 @@ class NoteRepository extends EntityRepository
                 ->getArrayResult();
     }
     
+    // TODO : voir pour fusionner findIconsHaveNotes et findIconsFromUser
+    // le premier sert au carousel dans carouselAction() du controller
+    // le deuxieme sert au notetype afin d'afficher les icones dans le form de creation de notes
+    
     /**
-     * Rechercher toutes les icones d'un utilisateur spécifié
+     * Rechercher toutes les icones d'un utilisateur spécifié, utilisé par le formulaire de creation de notes
      * @param type $user
      * @return array
      */
@@ -92,7 +104,7 @@ class NoteRepository extends EntityRepository
                 ->getArrayResult();
     }
     
-    public function findByIcon($iconAlt, $username, $page, $maxParPage)
+    public function findByIcon($iconAlt, $username)
     {
         $qb = $this->_em->createQueryBuilder();
         $qb->select('n, n.id, n.titre, n.date, n.slug, u.username')

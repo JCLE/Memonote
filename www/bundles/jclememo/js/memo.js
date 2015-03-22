@@ -6,14 +6,16 @@ $(document).ready(function(){
     // Disparition auto du message flash renvoyé par le controleur
     $('.flash_message').delay(2000).slideUp(1000);
     
-    if($("#jcle_memobundle_note_description").length)
+    if($("#jcle_memobundle_note_description").length) // S'il existe
     {
         $("#jcle_memobundle_note_description").markItUp(mySettings,{
             resizeHandle : true
-        });
-//        $(".markItUp").markItUp({
-//            previewInWindow:		'width=900' // 'width=800, height=600, resizable=yes, scrollbars=yes'
-//        });
+        }) // Shif + Tab pour quitter zone de texte sans la souris
+        .keyup(function (e) {
+            if (e.which === 9 && e.shiftKey) {
+                $('#jcle_memobundle_note_tag').focus();
+            }
+    });
     }
     
 //    console.log($('.panel-heading').width());
