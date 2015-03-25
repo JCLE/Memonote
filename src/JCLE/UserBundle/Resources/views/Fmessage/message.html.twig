@@ -1,7 +1,7 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% for type, messages in app.session.flashbag.all() %}
-    <div class="alert alert-{{ type }} success fade in flash_message tarace">
+    <div class="alert alert-{{ type }} success fade in flash_message">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         {% for message in messages %}
             {{ message }}

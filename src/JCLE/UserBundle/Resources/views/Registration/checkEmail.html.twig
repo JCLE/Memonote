@@ -2,6 +2,18 @@
 
 {% trans_default_domain 'FOSUserBundle' %}
 
+{% block jclememo_navbar %}
+    
+    {{ parent() }}
+    {% include "FOSUserBundle:Fmessage:message.html.twig" %}
+    
+{% endblock %}
+
 {% block jclememo_body %}
-    <p>{{ 'registration.check_email'|trans({'%email%': user.email}) }}</p>
+    <div class="row">
+        <div class="well text-center">
+            <p>{{ 'registration.check_email'|trans({'%email%': user.email}) }}</p>
+            <a class="btn btn-default" href='{{ path("jclememo_accueil") }}'>Retour</a>
+        </div>
+    </div>
 {% endblock %}

@@ -1,9 +1,9 @@
-{% extends "JCLEMemoBundle::layout.html.twig" %}
+{% extends "JCLEMemoBundle:Memo:index.html.twig" %}
 
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block jclememo_body %}
-    <div id="flash_message" class="alert alert-success fade in">
+    <div class="alert alert-success fade in flash_message">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
         {% if app.session is not empty %}
@@ -11,5 +11,5 @@
             {% if targetUrl is not empty %}<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>{% endif %}
         {% endif %}
     </div>
-{{ parent() }}
+    {{ parent() }}
 {% endblock %}

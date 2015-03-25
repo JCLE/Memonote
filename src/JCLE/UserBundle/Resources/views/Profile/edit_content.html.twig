@@ -4,21 +4,20 @@
     {{ form_start(form) }}
     
     <div class="form-group">
-        <label class="col-sm-offset-2 col-lg-offset-2 col-sm-2 col-lg-2 control-label">{{ form_label(form.username) }}</label>
+        <label class="col-sm-offset-2 col-lg-offset-2 col-sm-2 col-lg-2 control-label">Nom d'utilisateur :</label>
         <div class="col-sm-6 col-lg-6">
-            {{ form_widget(form.username, { 'attr': { 'class': 'form-control' } } ) }}
-            {{ form_errors(form.username) }}
+            <input type="text" class="form-control" value="{{ form.vars.value.username }}" disabled="disabled"/>
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-offset-2 col-lg-offset-2 col-sm-2 col-lg-2 control-label">{{ form_label(form.email) }}</label>
+        <div class="col-sm-offset-2 col-lg-offset-2 col-sm-2 col-lg-2 control-label">{{ form_label(form.email) }}</div>
         <div class="col-sm-6 col-lg-6">
             {{ form_widget(form.email, { 'attr': { 'class': 'form-control' } } ) }}
             {{ form_errors(form.email) }}
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-offset-2 col-lg-offset-2 col-sm-2 col-lg-2 control-label">{{ form_label(form.current_password) }}</label>
+        <div class="col-sm-offset-2 col-lg-offset-2 col-sm-2 col-lg-2 control-label">{{ form_label(form.current_password) }}</div>
         <div class="col-sm-6 col-lg-6">
             {{ form_widget(form.current_password, { 'attr': { 'class': 'form-control' } } ) }}
             {{ form_errors(form.current_password) }}

@@ -4,11 +4,12 @@
 
 {% block jclememo_body %}
     {% include "FOSUserBundle:Fmessage:message.html.twig" %}
-
+<div class="row">
     <div class='well text-center'>
         <p>
-        {{ 'resetting.check_email'|trans({'%email%': email}) }}
+            {{ 'resetting.check_email'|trans({'%email%': email}) }}
         </p>
-        <a href='{{ path("jclememo_accueil") }}'>Retour</a>
+        <a class="btn btn-default" href='{{ path("jclememo_accueil") }}'>Retour</a>
     <div>   
+</div>
 {% endblock %}

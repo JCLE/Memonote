@@ -9,14 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace FOS\UserBundle\Form\Type;
+namespace JCLE\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 
-class ProfileFormType extends AbstractType
+use FOS\UserBundle\Form\Type\ProfileFormType as BaseType;
+
+class ProfileFormType extends BaseType
 {
     private $class;
 
@@ -47,10 +49,15 @@ class ProfileFormType extends AbstractType
             'intention'  => 'profile',
         ));
     }
+    
+//    public function getParent()
+//    {
+//        return 'fos_user_registration';
+//    }
 
     public function getName()
     {
-        return 'fos_user_profile';
+        return 'jcle_edition_profile';
     }
 
     /**
