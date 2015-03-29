@@ -5,6 +5,7 @@ namespace JCLE\MemoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 use Symfony\Component\Security\Acl\Exception\Exception;
 
@@ -29,14 +30,21 @@ class Icon
     /**
      * @var string
      *
-     * @ORM\Column(name="alt", type="string", length=255)
+     * @ORM\Column(name="alt", type="string", length=50)
      * @Assert\Length(
      *      min = "0",
-     *      max = "255",
+     *      max = "50",
      *      maxMessage = "Le texte alternatif de l'image ne doit pas dépassé {{ limit }} caractères"
      * )
      */
     private $alt;
+    
+    /**
+     *
+     * @Gedmo\Slug(fields={"alt"})
+     * @ORM\Column(length=255, unique=true)
+     */
+    private $slug;
     
     /**
      *

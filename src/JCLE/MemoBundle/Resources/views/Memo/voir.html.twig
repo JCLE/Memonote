@@ -34,10 +34,11 @@
             <table class="table table-hover">
                 <tbody>
                 {% for note in pagination %}
-                    <tr onclick="window.location.href='{{ path('jclememo_voir',{ 'slug' :  note.slug } ) }}'">
-{#                            <td class="col-lg-4">{{ note.date|date('d/m/Y h:i:s') }}</td>#}
-                            <td class="col-lg-5 col-xs-4"><img src="{{ asset('uploads/icon/')~note.icon.id~'.png' }}" alt="{{ note.icon.alt }}"/></td>
-                            <td class="col-lg-7 col-xs-8"><a href="{{ path('jclememo_voir',{ 'slug' :  note.slug } ) }}">{{ note.titre}}</a></td>
+{#                    <tr onclick="window.location.href='{{ path('jclememo_voir',{ 'slug' :  note.slug } ) }}'">#}
+                    <tr>
+{#                        <td class="col-lg-4">{{ note.date|date('d/m/Y h:i:s') }}</td>#}
+                        <td class="col-lg-5 col-xs-4"><img src="{{ asset('uploads/icon/')~note.icon.id~'.png' }}" alt="{{ note.icon.alt }}"/></td>
+                        <td class="col-lg-7 col-xs-8"><a href="{{ path('jclememo_voir',{ 'slug' :  note.slug } ) }}">{{ note.titre}}</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>

@@ -28,10 +28,10 @@ class Note
     /**
      * @var string
      *
-     * @ORM\Column(name="titre", type="string", length=255)
+     * @ORM\Column(name="titre", type="string", length=125)
      * @Assert\Length(
      *      min = "2",
-     *      max = "255",
+     *      max = "125",
      *      minMessage = "Votre titre doit faire au moins {{ limit }} caractères",
      *      maxMessage = "Votre titre ne peut pas être plus long que {{ limit }} caractères"
      * )
@@ -41,7 +41,7 @@ class Note
     /**
      *
      * @Gedmo\Slug(fields={"titre"})
-     * @ORM\Column(length=128, unique=true)
+     * @ORM\Column(length=255, unique=true)
      */
     private $slug;
 

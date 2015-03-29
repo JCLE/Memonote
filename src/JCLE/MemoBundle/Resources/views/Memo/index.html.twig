@@ -19,7 +19,7 @@
             </div>
         </form>
     </div>
-
+            
     {% if is_granted ('ROLE_USER') %}
         {{ render(controller("JCLEMemoBundle:Memo:carousel")) }} 
     {% endif %}

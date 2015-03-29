@@ -31,7 +31,6 @@ class NoteType extends AbstractType
 
         $arrayIcons = $this->em->getRepository("JCLEMemoBundle:Icon")
                                 ->findIconsFromUser($this->user);
-//        dump($options);
 //        $builder->getAttributes()
         if(!empty($options['data']))
         {
@@ -65,6 +64,7 @@ class NoteType extends AbstractType
                             ->where('i.createur = :username')
                             ->setParameter('username', $this->user )
                             ->orderBy('i.alt', 'ASC');
+//                        return $er->findIconsFromUser($this->user);
                     }
             
             ));

@@ -2,8 +2,10 @@
 <div class="row">
     <ul class="nav nav-pills nav-justified">
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+{#            {{ dump(app.user) }}#}
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#" tabindex="-1">Bienvenue {{ app.user.username }} <span class="caret"></span></a>
                 <ul class="dropdown-menu dropdown col-lg-12">
+                  <li class="text-center"><a class="glyphicon glyphicon-th" href="{{ path('jclememo_voirnotes') }}" tabindex="-1"> Mes Notes </a></li>
                   <li class="text-center"><a class="glyphicon glyphicon-wrench" href="{{ path('fos_user_profile_show') }}" tabindex="-1"> Mon Compte </a></li>
                   <li class="text-center"><a class="glyphicon  glyphicon-off" href="{{ path('fos_user_security_logout') }}" tabindex="-1"> Déconnexion </a></li>
                 </ul>

@@ -38,8 +38,8 @@ class IconRepository extends EntityRepository
     public function findIconsFromUser(User $user)
     {
         $qb = $this->createQueryBuilder('i');
-        $qb->select('DISTINCT i')
-//            ->from('JCLEMemoBundle:Icon')
+        $qb->select('DISTINCT i, n')
+            ->leftJoin('i.notes','n')
             ->where('i.createur = :username')
             ->setParameter('username', $user );
         

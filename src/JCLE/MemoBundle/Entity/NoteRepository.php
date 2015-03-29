@@ -89,17 +89,17 @@ class NoteRepository extends EntityRepository
      * @param type $user
      * @return array
      */
-    public function findNotesFromUser(User $user)
-    {
-        $qb = $this->createQueryBuilder('n');
-        $qb->select('DISTINCT n, i')
-            ->where('n.createur = :username')
-            ->Join('n.icon','i')
-            ->setParameter('username', $user );
-        
-        return $qb->getQuery()
-                ->getArrayResult();
-    }
+//    public function findNotesFromUser(User $user)
+//    {
+//        $qb = $this->createQueryBuilder('n');
+//        $qb->select('DISTINCT n, i')
+//            ->where('n.createur = :username')
+//            ->Join('n.icon','i')
+//            ->setParameter('username', $user );
+//        
+//        return $qb->getQuery()
+//                ->getArrayResult();
+//    }
     
     public function findByIcon($iconAlt, $username)
     {

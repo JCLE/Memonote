@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+
+use JCLE\MemoBundle\JCLEMemoConst;
+
 use JCLE\MemoBundle\Entity\Note;
 use JCLE\MemoBundle\Entity\Icon;
 //use JCLE\MemoBundle\Form\NoteType;
@@ -131,14 +134,15 @@ class MemoController extends Controller
     public function voirNotesAction(Request $request)
     {
         $user = $this->getUser();
-        $notes = $this->getDoctrine()
+        $icons = $this->getDoctrine()
                 ->getManager()
-                ->getRepository('JCLEMemoBundle:Note')
-                ->findNotesFromUser($user);
-        $pagination = $this->createPagination($notes,$request);
+                ->getRepository('JCLEMemoBundle:Icon')
+                ->findIconsFromUser($user);
+//                ->findNotesFromUser($user);
+        $pagination = $this->createPagination($icons,$request, JCLEMemoConst::Max_Result_Notes_Mini);
         
-        return $this->render('JCLEMemoBundle:Memo:voir.html.twig', array(
-            'note'    =>  $notes
+        return $this->render('JCLEMemoBundle:Memo:voirNotes.html.twig', array(
+            'icons'    =>  $icons
             ,'pagination'    =>  $pagination
         ));
     }
@@ -276,9 +280,7 @@ class MemoController extends Controller
     public function ajaxSearchAction(Request $request)
     {
         $user = $this->getUser();
-        $max_result = 7;
         $tableau = array();
-        $bla = array();
         
         if($user != 'anon.')
         {
@@ -292,7 +294,7 @@ class MemoController extends Controller
                 $notes = $em->getRepository('JCLEMemoBundle:Note')
                                 ->recherche($mots_cles,$user);
                 
-                $tableau = $this->transformResults($notes, $mots_cles, $max_result);
+                $tableau = $this->transformResults($notes, $mots_cles, JCLEMemoConst::Max_Result_Ajax);
                 
                 return new JsonResponse($tableau); 
             }
@@ -393,7 +395,7 @@ class MemoController extends Controller
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function rechercheAction($value,$page=1, $maxParPage=4, Request $request)
+    public function rechercheAction($value,$page=1, Request $request)
     {
         $user = $this->getUser();
 
@@ -438,7 +440,7 @@ class MemoController extends Controller
         
         if($note)
         {
-            $pagination = $this->createPagination($note, $request, $page);
+            $pagination = $this->createPagination($note, $request, JCLEMemoConst::Max_Result_Notes, $page);
             
             return $this->render('JCLEMemoBundle:Memo:voir.html.twig', array(
                     'note' => $note
@@ -469,13 +471,13 @@ class MemoController extends Controller
             return $note;
         }
         
-        public function createPagination($note, Request $request, $page=1, $maxParPage=4)
+        public function createPagination($object, Request $request, $max_results, $page=1)
         {
             $paginator  = $this->get('knp_paginator');
             return $pagination = $paginator->paginate(
-                    $note,
+                    $object,
                     $request->query->get('page', $page)/*page number*/,
-                    $maxParPage/*limit per page*/
+                    $max_results /*limit per page*/
                 );
         }
         
@@ -521,7 +523,7 @@ class MemoController extends Controller
 //                );
 //        }
         
-        public function searchNotesByIconAction($iconAlt, $page=1, $maxParPage=4, Request $request)
+        public function searchNotesByIconAction($page, $iconAlt, Request $request)
         {
             $username = $this->getUser()->getUsername();
             
@@ -532,12 +534,7 @@ class MemoController extends Controller
             
             if($note)
             {
-                $paginator  = $this->get('knp_paginator');
-                $pagination = $paginator->paginate(
-                    $note,
-                    $request->query->get('page', $page)/*page number*/,
-                        $maxParPage/*limit per page*/
-                );
+                $pagination = $this->createPagination($note, $request, JCLEMemoConst::Max_Result_Notes, $page);
             
                 return $this->render('JCLEMemoBundle:Memo:voir.html.twig', array(
                         'note' => $note   

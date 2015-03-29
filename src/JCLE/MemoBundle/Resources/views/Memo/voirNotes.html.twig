@@ -1,0 +1,35 @@
+
+{% extends 'JCLEMemoBundle::layout.html.twig' %}
+
+{#{% set seeBreadcrumb = true %}#}
+{#{% set type = type|default('info') %}#}
+
+{% block jclememo_body %}
+
+    {% if icons %}
+        <div class="row">
+            {% for icon in pagination %}
+                {% if icon.notes|length != 0 %}
+                    {% set type = 'info' %}
+                <a href="{{ path('jclememo_searchnotesbyicon',{ 'iconAlt' :  icon.alt } ) }}">
+                {% else %}
+                    {% set type = 'danger' %}
+                <a class="label-success" href="{{ path('jclememo_nouveau' ) }}">
+                {% endif %}
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 thumbnail text-center">
+
+                        <img src="{{ asset('uploads/icon/')~icon.id~'.png' }}" alt="{{ icon.alt }}"/>
+                        <p>{{ icon.alt }} <span class="badge alert-{{type}}">{{ icon.notes|length }}</span></p>
+
+                    </div>
+                </a>
+            {% endfor %}
+        </div>        
+
+    <div class="navigation text-center">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+    
+    {% endif %}
+
+{% endblock %}
