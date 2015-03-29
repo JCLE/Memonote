@@ -128,6 +128,21 @@ class MemoController extends Controller
         ));
     }
     
+    public function voirNotesAction(Request $request)
+    {
+        $user = $this->getUser();
+        $notes = $this->getDoctrine()
+                ->getManager()
+                ->getRepository('JCLEMemoBundle:Note')
+                ->findNotesFromUser($user);
+        $pagination = $this->createPagination($notes,$request);
+        
+        return $this->render('JCLEMemoBundle:Memo:voir.html.twig', array(
+            'note'    =>  $notes
+            ,'pagination'    =>  $pagination
+        ));
+    }
+    
     
     /**
      * Supprimer une note
@@ -234,15 +249,22 @@ class MemoController extends Controller
         if($user == $icon->getCreateur())
         {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($icon);
-            $em->flush();
-            
+            $nbIcon = $em->getRepository('JCLEMemoBundle:Icon')->getNbIcon($user);
+            if($nbIcon > 1)
+            {
+                $em->remove($icon);
+                $em->flush();
+            }
+            else
+            {
+                throw new \Exception("Vous ne pouvez pas supprimer la dernière icône qu'il vous reste.\nVous devez en posséder au moins une.");
+            }
             $this->get('session')->getFlashBag()->add('info-danger', 'Icone supprimée');
             return $this->redirect($this->generateUrl('jclememo_accueil'));
         }
         else
         {
-            return new Response("Vous n'avez pas les droits necessaires.");
+            throw new \Exception("Vous n'avez pas les droits nécessaires.");
         }  
     }
     
@@ -274,6 +296,10 @@ class MemoController extends Controller
                 
                 return new JsonResponse($tableau); 
             }
+        }
+        else
+        {
+            throw new \Exception("Vous n'avez pas les droits nécessaires.");
         }
     }
     
@@ -380,17 +406,58 @@ class MemoController extends Controller
         $em = $this->getDoctrine()->getManager();
         $depot = $em->getRepository('JCLEMemoBundle:Note');
         
-        $note = $depot->findOneBy(array('titre'=>$value,'createur'=>$user));
+        // Ici, je récupère les titres correspondant exactement à la recherche
+        // ( car il est possible que 2 titres aient le même nom )
+        $note = $depot->findBy(array('titre'=>$value,'createur'=>$user));
+        $countNote = count($note);
+//        $note = $depot->findOneBy(array('titre'=>$value,'createur'=>$user));
         
-        // Si un titre correspond à cette recherche, affichage de la note correspondante
-        if($note)
+        
+        if($countNote==0) // Pas de titre correspondant -> creation du tableau de retour des mots recherchés.
+        {
+           $note = $this->createArrayForSearch($value, $depot);
+           if(count($note)==1)
+           {
+               $countNote = 1;
+           }
+//           if(count($note)==1)
+//           {
+//               return $this->redirect($this->generateUrl('jclememo_voir', array(
+//                'slug' => $note[0]->getSlug()
+//                    )));
+//           }
+        }
+        
+        if($countNote==1) // Un seul titre correspondant -> affichage de la note.
         {                
             return $this->redirect($this->generateUrl('jclememo_voir', array(
-                'slug' => $note->getSlug()
+                'slug' => $note[0]->getSlug()
                     )));
+        }
+        // Si plus d'un titre -> $note conserve les notes ayant le même titre et les affichent.
+        
+        if($note)
+        {
+            $pagination = $this->createPagination($note, $request, $page);
+            
+            return $this->render('JCLEMemoBundle:Memo:voir.html.twig', array(
+                    'note' => $note
+                    ,'pagination' => $pagination
+                    ,'value' => $value
+                ));
         }
         else
         {
+            $this->get('session')->getFlashBag()->add('info-warning', 'aucune note correspondant à la recherche : '.$value);
+            return $this->redirect($this->generateUrl('jclememo_accueil'));
+
+        }
+    }
+        
+        public function createArrayForSearch($value, $depot)
+        {
+            $note=array();
+            $user = $this->getUser();
             // Détachement de la recherche mot à mot
             $searches = array_filter(explode(' ',$value));
             $recherche = $depot->recherche($searches, $user);
@@ -399,30 +466,17 @@ class MemoController extends Controller
             {
                 $note[$key] = $_value;
             }
-
-            if($note)
-            {
-                $paginator  = $this->get('knp_paginator');
-                $pagination = $paginator->paginate(
+            return $note;
+        }
+        
+        public function createPagination($note, Request $request, $page=1, $maxParPage=4)
+        {
+            $paginator  = $this->get('knp_paginator');
+            return $pagination = $paginator->paginate(
                     $note,
                     $request->query->get('page', $page)/*page number*/,
                     $maxParPage/*limit per page*/
                 );
-            
-                return $this->render('JCLEMemoBundle:Memo:voir.html.twig', array(
-                        'note' => $note
-                        ,'pagination' => $pagination
-                        ,'value' => $value
-                    ));
-            }
-            else
-            {
-                $this->get('session')->getFlashBag()->add('info-warning', 'aucune note correspondant à la recherche : '.$value);
-                return $this->redirect($this->generateUrl('jclememo_accueil'));
-
-            }
-          }
-            
         }
         
 //        public function listAction(Note $note,Request $request)

@@ -5,6 +5,8 @@ namespace JCLE\MemoBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
+use JCLE\UserBundle\Entity\User;
+
 /**
  * NoteRepository
  *
@@ -15,9 +17,9 @@ class NoteRepository extends EntityRepository
 {   
     public function recherche ( $recherche, $username)
     {
-            $qb = $this->_em->createQueryBuilder();
-            $qb->select('n')
-                ->from('JCLEMemoBundle:Note', 'n');
+            $qb = $this->createQueryBuilder('n');
+//            $qb->select('n')
+//                ->from('JCLEMemoBundle:Note', 'n');
           
             $qb = $this->requeteDeRecherche($recherche, $username, $qb);
             
@@ -61,7 +63,6 @@ class NoteRepository extends EntityRepository
                 ->Join('n.icon','i');
 //                ->setFirstResult(($page-1)* $max_result)
 //                ->setMaxResults($max_result)
-            dump($qb->getQuery());
             return $qb;
     }
     
@@ -70,11 +71,11 @@ class NoteRepository extends EntityRepository
      * @param type $user
      * @return array
      */
-    public function findIconsHaveNotes($user)
+    public function findIconsHaveNotes(User $user)
     {
-        $qb = $this->_em->createQueryBuilder();
+        $qb = $this->createQueryBuilder('n');
         $qb->select('DISTINCT i.alt, i.id')
-            ->from('JCLEMemoBundle:Note', 'n')
+//            ->from('JCLEMemoBundle:Note', 'n')
             ->Join('n.icon','i')
             ->where('n.createur = :username')
             ->setParameter('username', $user );
@@ -83,21 +84,17 @@ class NoteRepository extends EntityRepository
                 ->getArrayResult();
     }
     
-    // TODO : voir pour fusionner findIconsHaveNotes et findIconsFromUser
-    // le premier sert au carousel dans carouselAction() du controller
-    // le deuxieme sert au notetype afin d'afficher les icones dans le form de creation de notes
-    
     /**
      * Rechercher toutes les icones d'un utilisateur spécifié, utilisé par le formulaire de creation de notes
      * @param type $user
      * @return array
      */
-    public function findIconsFromUser($user)
+    public function findNotesFromUser(User $user)
     {
-        $qb = $this->_em->createQueryBuilder();
-        $qb->select('DISTINCT i')
-            ->from('JCLEMemoBundle:Icon', 'i')
-            ->where('i.createur = :username')
+        $qb = $this->createQueryBuilder('n');
+        $qb->select('DISTINCT n, i')
+            ->where('n.createur = :username')
+            ->Join('n.icon','i')
             ->setParameter('username', $user );
         
         return $qb->getQuery()
@@ -106,9 +103,9 @@ class NoteRepository extends EntityRepository
     
     public function findByIcon($iconAlt, $username)
     {
-        $qb = $this->_em->createQueryBuilder();
-        $qb->select('n, n.id, n.titre, n.date, n.slug, u.username')
-                ->from('JCLEMemoBundle:Note', 'n')
+        $qb = $this->createQueryBuilder('n');
+        $qb->select('n, i')
+//                ->from('JCLEMemoBundle:Note', 'n')
                     ->Join('n.icon','i')
                     ->Join('n.createur','u')
                     ->where('i.alt = :altIcon')
@@ -127,7 +124,7 @@ class NoteRepository extends EntityRepository
     {
         $qb= $this->createQueryBuilder('id')
             ->select('COUNT(DISTINCT n.id)')
-                ->from('JCLEMemoBundle:Note', 'n')
+//                ->from('JCLEMemoBundle:Note', 'n')
                     ->Join('n.icon','i')
                     ->Join('n.createur','u')
                     ->where('i.alt = :altIcon')
@@ -141,8 +138,7 @@ class NoteRepository extends EntityRepository
     
     public function requeteDeIcon ($iconAlt, $username, $qb)
     {
-        return   $qb->from('JCLEMemoBundle:Note', 'n')
-                    ->Join('n.icon','i')
+        return   $qb->Join('n.icon','i')
                     ->Join('n.createur','u')
                     ->where('i.alt = :altIcon')
                     ->setParameter('altIcon', $iconAlt )

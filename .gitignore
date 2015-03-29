@@ -1,4 +1,4 @@
-/web/bundles/
+/www/bundles/
 /app/bootstrap*
 /app/cache/*
 /app/logs/*
@@ -6,3 +6,4 @@
 /app/config/parameters.yml
 *.DS_Store
 /nbproject*
+www/uploads/*

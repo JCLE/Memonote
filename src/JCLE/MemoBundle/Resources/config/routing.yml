@@ -18,6 +18,10 @@ jclememo_voir:
     path:    /voir/{slug}
     defaults: { _controller: JCLEMemoBundle:Memo:voir }
     
+jclememo_voirnotes:
+    path:    /voirnotes
+    defaults: { _controller: JCLEMemoBundle:Memo:voirNotes }
+    
 jclememo_prerecherche:
     pattern: /prerecherche
     defaults: { _controller: JCLEMemoBundle:Memo:prerecherche }

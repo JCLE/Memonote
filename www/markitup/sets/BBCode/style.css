@@ -25,6 +25,12 @@
 .markItUp .image a {
 	background-image:url(images/image.png); 
 }
+.markItUp .image-left a {
+	background-image:url(images/image_left.png); 
+}
+.markItUp .image-right a {
+	background-image:url(images/image_right.png); 
+}
 .markItUp .lien a {
 	background-image:url(images/link.png);
 }
@@ -49,9 +55,9 @@
 .markItUp .justify a {
 	background-image:url(images/text_align_justify.png);
 }
-.markItUp .h1 a {
+/*.markItUp .h1 a {
 	background-image:url(images/text_heading_1.png);
-}
+}*/
 .markItUp .h2 a {
 	background-image:url(images/text_heading_2.png);
 }
@@ -87,4 +93,7 @@
 }
 .markItUp .pre a {
 	background-image:url(images/page_white_code.png);
+}
+.markItUp .bloc-notes a {
+	background-image:url(images/note.png);
 }

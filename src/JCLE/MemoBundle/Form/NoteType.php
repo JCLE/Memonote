@@ -29,7 +29,7 @@ class NoteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {     
 
-        $arrayIcons = $this->em->getRepository("JCLEMemoBundle:Note")
+        $arrayIcons = $this->em->getRepository("JCLEMemoBundle:Icon")
                                 ->findIconsFromUser($this->user);
 //        dump($options);
 //        $builder->getAttributes()

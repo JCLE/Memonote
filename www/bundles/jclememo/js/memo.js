@@ -12,8 +12,11 @@ $(document).ready(function(){
             resizeHandle : true
         }) // Shif + Tab pour quitter zone de texte sans la souris
         .keyup(function (e) {
-            if (e.which === 9 && e.shiftKey) {
+            if (e.which === 9 && e.ctrlKey) {
                 $('#jcle_memobundle_note_tag').focus();
+            }
+            if (e.which === 9 && e.shiftKey) {
+                $('#jcle_memobundle_note_titre').focus();
             }
     });
     }
@@ -50,7 +53,7 @@ function ChargeImg ()
     $('#recept-img').html('<img id=\"icon\" src="'+pathImgDirectory+$('.target-img').val()+'.png" alt="'+$('.target-img').val()+'" /></img>');
 }
 
-$('#icon-edit').click(function()
+$('.icon-edit').click(function()
 {
     $('#icon-actuel').hide();
     $('#icon-change').show();   
