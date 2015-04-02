@@ -6,5 +6,5 @@
 /app/config/parameters.yml
 *.DS_Store
 /nbproject*
-/www/uploads/
-/nbproject/
+/www/uploads/*
+/nbproject/*

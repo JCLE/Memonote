@@ -4,6 +4,10 @@ namespace JCLE\MemoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
+
+use Symfony\Component\Security\Acl\Exception\Exception;
 
 /**
  * Icon
@@ -26,23 +30,43 @@ class Icon
     /**
      * @var string
      *
-     * @ORM\Column(name="alt", type="string", length=255)
+     * @ORM\Column(name="alt", type="string", length=50)
+     * @Assert\Length(
+     *      min = "0",
+     *      max = "50",
+     *      maxMessage = "Le texte alternatif de l'image ne doit pas dépassé {{ limit }} caractères"
+     * )
      */
     private $alt;
     
     /**
      *
+     * @Gedmo\Slug(fields={"alt"})
+     * @ORM\Column(length=255, unique=true)
+     */
+    private $slug;
+    
+    /**
+     *
      * @ORM\ManyToOne(targetEntity="JCLE\UserBundle\Entity\User", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $createur;
     
+    /**
+     *
+     * @Assert\File(
+     *      mimeTypes = {"image/png"}
+     * )
+     */
     private $fichier;
     
     private $tempFilename;
     
     /**
      *
-     * @ORM\OneToMany(targetEntity="JCLE\MemoBundle\Entity\Note", mappedBy="advert")
+     * @ORM\OneToMany(targetEntity="JCLE\MemoBundle\Entity\Note", mappedBy="icon", cascade={"remove"} )
+     * @Assert\Valid()
      */
     private $notes;
 
@@ -82,13 +106,18 @@ class Icon
     // accesseur modifié en rajoutant la condition si un fichier existe déja
     public function setfichier(UploadedFile $fichier)
     {
-        $this->fichier = $fichier;
-        
-        // si aucun fichier renseigné déja pour cet objet
-        if(null !== $this->alt)
+        if($fichier->getMimeType()=="image/png")
         {
-            $this->alt = null;
+            $this->fichier = $fichier;
+            // si aucun fichier renseigné déja pour cet objet
+            if(null !== $this->alt)
+            {
+                $this->alt = null;
+            }
+        }else{
+            throw new Exception('Format du fichier incorrect. Votre image doit être au format .png');
         }
+        
 
         return $this;
     }
@@ -117,7 +146,7 @@ class Icon
 
         // Et on génère l'attribut alt de la balise <img>, à la valeur du nom du fichier sur le PC de l'internaute
         // tout en retirant le .png
-        $this->alt = str_replace('.png','',$this->fichier->getClientOriginalName());
+        $this->alt = str_replace('.png','',strtolower($this->fichier->getClientOriginalName()));
     }
     
     /**
@@ -205,7 +234,7 @@ class Icon
     
     public function getUploadRootDir()
     {
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+        return __DIR__.'/../../../../www/'.$this->getUploadDir();
     }
     
     public function getWebPath()
@@ -236,5 +265,47 @@ class Icon
     public function getCreateur()
     {
         return $this->createur;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->notes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add notes
+     *
+     * @param \JCLE\MemoBundle\Entity\Note $notes
+     * @return Icon
+     */
+    public function addNote(\JCLE\MemoBundle\Entity\Note $notes)
+    {
+        $this->notes[] = $notes;
+        
+        $notes->setIcon($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove notes
+     *
+     * @param \JCLE\MemoBundle\Entity\Note $notes
+     */
+    public function removeNote(\JCLE\MemoBundle\Entity\Note $notes)
+    {
+        $this->notes->removeElement($notes);
+    }
+
+    /**
+     * Get notes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getNotes()
+    {
+        return $this->notes;
     }
 }

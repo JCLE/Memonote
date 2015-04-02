@@ -15,11 +15,11 @@ textarea
     margin-right:5px;
     height:50px;
 }
-
-.mini-icon
+// Ne fonctionne pas avec assetic :/
+/*.mini-icon
 {
     border-radius: 50%;
-}
+}*/
 
 #recept-img, .target-img
 {
@@ -32,7 +32,7 @@ textarea
     margin-top: 5px;
 }
 // Customisation des boutons clavier :p
-kbd
+/*kbd
 {
     -moz-border-radius:3px;
     -moz-box-shadow:0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;
@@ -50,7 +50,7 @@ kbd
     margin:0 .1em;
     padding:.1em .6em;
     text-shadow:0 1px 0 #fff;
-}
+}*/
 
 .table tbody>tr>td{
     vertical-align: middle;

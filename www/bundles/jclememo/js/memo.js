@@ -50,7 +50,8 @@ $('.target-img').change(function()
 
 function ChargeImg ()
 {
-    $('#recept-img').html('<img id=\"icon\" src="'+pathImgDirectory+$('.target-img').val()+'.png" alt="'+$('.target-img').val()+'" /></img>');
+    var timestamp = Math.round(+new Date() / 1000);
+    $('#recept-img').html('<img id=\"icon\" src="'+pathImgDirectory+$('.target-img').val()+'.png'+timestamp+'" alt="'+$('.target-img').val()+'" /></img>');
 }
 
 $('.icon-edit').click(function()

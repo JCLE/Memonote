@@ -39,7 +39,7 @@ class SHExtension extends \Twig_Extension
             ,'\[img\](.*?)\[\/img\]'    =>  '<img src="$1" onload="javascript:resizeImage(this);"/>'
             ,'\[img-left\](.*?)\[\/img-left\]'    =>  '<img src="$1" onload="javascript:resizeImage(this);" class="pull-left"/>'
             ,'\[img-right\](.*?)\[\/img-right\]'    =>  '<img src="$1" onload="javascript:resizeImage(this);" class="pull-right"/>'
-            ,'\[bloc\](.*?)\[\/bloc\]'    =>  '<div class="row">$1</div>'
+            ,'\[bloc\](.*?)\[\/bloc\]'    =>            '<div class="row"><div class="col-lg-12">$1</div></div>'
             ,'\[url=([^\]]*)\](.*?)\[\/url\]'    =>  '<a href="$1">$2</a>'
             ,'\[code\](.*?)\[\/code\]'    =>  '<pre>$1</pre>'
             ,'\[php\](.*?)\[\/php\]'    =>  '<pre type="syntaxhighlighter" class="brush: php">$1</pre>'

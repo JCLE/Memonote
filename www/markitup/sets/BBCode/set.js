@@ -36,7 +36,7 @@ var mySettings = {
 		{name:'Image', key:'P', replaceWith:'[img][![URL de l\'image:!:http://]!][/img]' ,className:'image'},
 		{name:'Image flottant à gauche', replaceWith:'[img-left][![URL de l\'image:!:http://]!][/img-left]' ,className:'image-left'},
 		{name:'Image flottant à droite', replaceWith:'[img-right][![URL de l\'image:!:http://]!][/img-right]' ,className:'image-right'},
-                {name:'Bloc notes', openWith:'[block]', closeWith:'[/block]', className:'bloc-notes' },
+                {name:'Bloc notes', openWith:'[bloc]', closeWith:'[/bloc]', className:'bloc-notes' },
 		{name:'Lien', key:'L', openWith:'[url=[![Lien:!:http://]!](!( title="[![Title]!]")!)]', closeWith:'[/url]', placeHolder:'Le texte du lien...' ,className:'lien'},
                 {name:'Touche du clavier', openWith:'[kbd]', closeWith:'[/kbd]' ,className:'kbd'},
 		{separator:'---------------' },

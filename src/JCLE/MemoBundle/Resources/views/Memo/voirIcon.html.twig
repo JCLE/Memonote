@@ -18,7 +18,7 @@
             <div id="icon-actuel" class="form-group">
 {#                <label class="col-sm-2 col-lg-2 control-label">{{ form_label(form.alt) }}</label>#}
                 <div class="col-sm-offset-1 col-lg-offset-1 col-sm-1 col-lg-1">
-                    <img id="icon" src="{{ asset('uploads/icon/')~id~'.png' }}" alt="icon" title="modifier" class="icon-edit"/>
+                    <img id="icon" src="{{ asset('uploads/icon/')~id~'.png?time='~date().timestamp }}" alt="icon" title="modifier" class="icon-edit"/>
                 </div>
                 <div class="col-sm-9 col-lg-9">
                     {{ form_widget(form.alt, { 'attr': { 'class': 'form-control' } } ) }}

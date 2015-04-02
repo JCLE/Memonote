@@ -9,6 +9,8 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Security\Core\SecurityContext;
 use Doctrine\Common\Persistence\ObjectManager;
 
+use JCLE\MemoBundle\Form\DataTransformer\IdToSlugTransformer;
+
 class NoteType extends AbstractType
 {
     private $securityContext;
@@ -22,6 +24,7 @@ class NoteType extends AbstractType
         $this->user = $securityContext->getToken()->getUser();
         $this->em = $em;
     }
+    
         /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -29,6 +32,8 @@ class NoteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {     
 
+        $transformer = new IdToSlugTransformer($this->em);
+        
         $arrayIcons = $this->em->getRepository("JCLEMemoBundle:Icon")
                                 ->findIconsFromUser($this->user);
 //        $builder->getAttributes()
@@ -40,6 +45,13 @@ class NoteType extends AbstractType
         $builder
             ->add('titre', 'text')
             ->add('description', 'textarea');
+        
+//            $builder->add(
+//                $builder->create('icon', 'text')
+//                    ->addModelTransformer($transformer)
+//            );
+
+                
 //            ->add('date', 'date') // attention, si je mets datetime, j'ai les heures et minutes qui s'affichent également
             // Creation de combobox ou radio ou select
                 // multiple : plusieurs choix selectionnables
@@ -64,7 +76,6 @@ class NoteType extends AbstractType
                             ->where('i.createur = :username')
                             ->setParameter('username', $this->user )
                             ->orderBy('i.alt', 'ASC');
-//                        return $er->findIconsFromUser($this->user);
                     }
             
             ));

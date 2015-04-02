@@ -95,6 +95,7 @@ class MemoController extends Controller
 //        $form->handleRequest($request);
         
         $form = $this->createForm('jcle_memobundle_note',$note);
+        
         $form->handleRequest($request);
 //        $note = $request->attributes->get('note');
 //        dump($request->attributes->get('note'));
@@ -230,9 +231,6 @@ class MemoController extends Controller
                 $this->get('session')->getFlashBag()->add('info-warning', 'Icone modifiée');
 
                 return $this->redirect($this->generateUrl('jclememo_voiricon',array('id' => $icon->getId() )));
-
-                // On redirige vers la page de visualisation de l'article nouvellement créé
-//                    return $this->redirect($this->generateUrl('sdzblog_voir', array('id' => $article->getId())));
             }
         
         return $this->render('JCLEMemoBundle:Memo:voirIcon.html.twig', array(

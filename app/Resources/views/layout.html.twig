@@ -5,13 +5,31 @@
 
     <title>{% block title %}Memonote{% endblock %}</title>
         
-    {% block stylesheets %}
+{#    {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('css/jquery-ui.min.css') }}" type="text/css" />
         <link rel="stylesheet" href="{{ asset('css/shCore.css') }}" type="text/css" />
         <link rel="stylesheet" href="{{ asset('css/shThemeDefault.css') }}" type="text/css" />
-        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" type="text/css" />
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" type="text/css" />
         <link rel="stylesheet" href="{{ asset('bundles/jclememo/css/style.css') }}" type="text/css" />
-    {% endblock %}
+    {% endblock %}#}
+    
+    {% stylesheets  filter='cssrewrite' output='css/compiled/main.css'  filter='yui_css'
+                    '@JCLEMemoBundle/Resources/public/css/style.css'
+                    'css/jquery-ui.min.css'
+                    'css/shCore.css'
+                    'css/shThemeDefault.css'
+                    'css/bootstrap.css'
+                    'markitup/skins/simple/style.css'
+                    'markitup/sets/BBCode/style.css' 
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css"/>
+    {% endstylesheets %}
+    
+{#    {% javascripts '@AcmeFooBundle/Resources/public/js/*' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}#}
+
+
       
   </head>
 
@@ -26,26 +44,52 @@
             {% block jclememo_navbar %}{% endblock %}
             {% block jclememo_body %}{% endblock %}
         {% endblock %}
+        
+        
 
-        {% block javascript %}
-            <script src="{{ asset('js/jquery.js') }}" type="text/javascript" ></script>
-            <script src="{{ asset ('js/jquery-ui.min.js') }}" type="text/javascript"></script>
-{#            <script src="{{ asset('js/syntaxHighlighter/shAutoloader.js') }}" type="text/javascript" ></script>#}
-            <script src="{{ asset('bundles/jclememo/js/memo.js') }}" type="text/javascript" ></script>
-            <script src="{{ asset('js/shCore.js') }}" type="text/javascript" ></script>
-{#            <script src="{{ asset('js/brushesSH/shBrushPhp.js') }}" type="text/javascript" ></script>
-            <script src="{{ asset('js/brushesSH/shBrushCSharp.js') }}" type="text/javascript" ></script>#}
-            <script src="{{ asset('js/bootstrap.min.js') }}" type="text/javascript" ></script>
-            <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-            <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-            <script type="text/javascript">
-                var pathImgDirectory = "{{ asset('uploads/icon/') }}";
-{#                SyntaxHighlighter.all();#}
-                SyntaxHighlighter.config.stripBrs = true;
-           </script>
-           <script type="text/javascript" src="{{ asset('js/shCore.js') }}"></script>
-            <script type="text/javascript" src="{{ asset('js/brushesSH/shAutoloader.js') }}" ></script>
-            <script type="text/javascript">
+        {% block javascripts %}
+{#            <script src="{{ asset('js/jquery.js') }}" type="text/javascript" ></script>
+            <script src="{{ asset ('js/jquery-ui.min.js') }}" type="text/javascript"></script>#}
+{#            <script src="{{ asset('bundles/jclememo/js/memo.js') }}" type="text/javascript" ></script>#}
+{#            <script src="{{ asset('js/shCore.js') }}" type="text/javascript" ></script>
+            <script src="{{ asset('js/bootstrap.min.js') }}" type="text/javascript" ></script>#}
+{#            <script type="text/javascript" src="{{ asset('js/shCore.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/brushesSH/shAutoloader.js') }}" ></script>#}
+{#            <script src="{{ asset('markitup/jquery.markitup.js') }}" type="text/javascript"></script>
+            <script src="{{ asset('markitup/sets/BBCode/set.js') }}" type="text/javascript"></script>#}
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+            
+           {% javascripts output='js/compiled/main.js'  filter='yui_js'
+                        'js/jquery.js'
+                        'js/jquery-ui.js'
+                        '@JCLEMemoBundle/Resources/public/js/*'
+                        'js/shCore.js'
+                        'js/bootstrap.js'
+                        'js/brushesSH/*'
+                        'markitup/jquery.markitup.js'
+                        'markitup/sets/BBCode/set.js'
+                        
+        %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        <script type="text/javascript">
+            var pathImgDirectory = "{{ asset('uploads/icon/') }}";
+                SyntaxHighlighter.all();
+            SyntaxHighlighter.config.stripBrs = true;
+       </script>
+{#            <script type="text/javascript">
+                SyntaxHighlighter.autoloader(
+                ['js','jscript','javascript','{{ asset('js/compiled/main.js') }}'],
+                ['c#','csharp','{{ asset('js/compiled/main.js') }}'],
+                ['css','{{ asset('js/compiled/main.js') }}'],
+                ['xml','{{ asset('js/compiled/main.js') }}'],
+                ['sql','{{ asset('js/compiled/main.js') }}'],
+                ['php','{{ asset('js/compiled/main.js') }}']
+                );
+                SyntaxHighlighter.all();
+            </script>#}
+            {#<script type="text/javascript">
                 SyntaxHighlighter.autoloader(
                 ['js','jscript','javascript','{{ asset('js/brushesSH/shBrushJScript.js') }}'],
                 ['c#','csharp','{{ asset('js/brushesSH/shBrushCSharp.js') }}'],
@@ -55,7 +99,7 @@
                 ['php','{{ asset('js/brushesSH/shBrushPhp.js') }}']
                 );
                 SyntaxHighlighter.all();
-            </script>
+            </script>#}
         {% endblock %}
     
 {#    <footer><p>Nom récupéré dans le parameters et config = {{ webmaster }} @ 2014</p></footer>#}

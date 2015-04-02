@@ -37,7 +37,7 @@
 {#                    <tr onclick="window.location.href='{{ path('jclememo_voir',{ 'slug' :  note.slug } ) }}'">#}
                     <tr>
 {#                        <td class="col-lg-4">{{ note.date|date('d/m/Y h:i:s') }}</td>#}
-                        <td class="col-lg-5 col-xs-4"><img src="{{ asset('uploads/icon/')~note.icon.id~'.png' }}" alt="{{ note.icon.alt }}"/></td>
+                        <td class="col-lg-5 col-xs-4"><img src="{{ asset('uploads/icon/')~note.icon.id~'.png?time='~date().timestamp }} }}" alt="{{ note.icon.alt }}"/></td>
                         <td class="col-lg-7 col-xs-8"><a href="{{ path('jclememo_voir',{ 'slug' :  note.slug } ) }}">{{ note.titre}}</a></td>
                     </tr>
                 {% endfor %}
@@ -55,23 +55,25 @@
                 <div class="panel-heading clearfix" style="vertical-align:middle;">
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                         <div class='pull-right'>
-                            <button onclick="location.href='{{ path('jclememo_modifier',{ 'slug' :  note.slug } ) }}';" class="btn btn-default btn-xs mini-icon"><span class="glyphicon glyphicon-pencil"></span></button>
-                            <button onclick="ConfirmDelete('{{ path('jclememo_supprimer',{ 'id' :  note.id } ) }}','Voulez-vous vraiment supprimer la Note : \n\n'+'{{ note.titre }}');" class="btn btn-default btn-xs mini-icon"><span class="glyphicon glyphicon-trash"></span></button>
+                            <button onclick="location.href='{{ path('jclememo_modifier',{ 'slug' :  note.slug } ) }}';" class="btn btn-default btn-xs" style="border-radius: 50%;"><span class="glyphicon glyphicon-pencil"></span></button>
+                            <button onclick="ConfirmDelete('{{ path('jclememo_supprimer',{ 'id' :  note.slug } ) }}','Voulez-vous vraiment supprimer la Note : \n\n'+'{{ note.titre }}');" style="border-radius: 50%;" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-trash"></span></button>
                         </div>
                     {% endif %}
                     <div class="panel-title">
-                        <img id="icon" src="{{ asset('uploads/icon/')~note.icon.id~'.png' }}" alt="{{ note.icon.alt }}" class="pull-left"/>
+                        <img id="icon" src="{{ asset('uploads/icon/')~note.icon.id~'.png?time='~date().timestamp }} }}" alt="{{ note.icon.alt }}" class="pull-left"/>
                         <h3>{{ ' '~note.titre}}</h3>
                     </div>
                 </div>
                 <div class="panel-body">
-{#                        {{ note.description|striptags|sh|raw|nl2br}}#}
-                    <div class="col-lg-12">
-                        {{ note.description|sh|raw|nl2br}}
+                    <div class="row">
+                        <div class="col-lg-12">
+{#                            {{ note.description|striptags|sh|raw|nl2br}}#}
+                            {{ note.description|sh|raw|nl2br}}
+                        </div>
                     </div>
                     {% if note.notes is not empty %}
                         </br></br>
-                        <div class="thumbnail">
+                        <div class="thumbnail col-lg-12">
                             <p>En lien avec cette note : </p>
                             {% for note_en_lien in note.notes %}
                                 <a class="btn btn-default" href="{{ path("jclememo_voir",{ 'slug' : note_en_lien.slug }) }}">{{ note_en_lien.titre }}</a>
@@ -79,7 +81,7 @@
                         </div>
                     {% endif %}
                 </div>
-                <div class="panel-footer">Crée le {{ note.date|date('d/m/Y h:i:s') }} par {{ note.createur }}</div>
+                <div class="panel-footer">Crée le {{ note.date|date('d/m/Y à h:i:s') }} par {{ note.createur }}</div>
             </div>
         </div>
     {% endif %}

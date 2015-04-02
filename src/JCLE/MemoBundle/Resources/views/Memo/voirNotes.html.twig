@@ -18,7 +18,7 @@
                 {% endif %}
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 thumbnail text-center">
 
-                        <img src="{{ asset('uploads/icon/')~icon.id~'.png' }}" alt="{{ icon.alt }}"/>
+                        <img src="{{ asset('uploads/icon/')~icon.id~'.png?time='~date().timestamp }} }}" alt="{{ icon.alt }}"/>
                         <p>{{ icon.alt }} <span class="badge alert-{{type}}">{{ icon.notes|length }}</span></p>
 
                     </div>

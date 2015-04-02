@@ -308,4 +308,27 @@ class Icon
     {
         return $this->notes;
     }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Icon
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
 }
