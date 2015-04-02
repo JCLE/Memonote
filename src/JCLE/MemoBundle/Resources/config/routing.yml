@@ -54,11 +54,15 @@ jclememo_ajouticon:
     pattern: /ajouticon
     defaults: { _controller: JCLEMemoBundle:Memo:ajoutIcon }
     
-jclememo_voiricon:
-    pattern: /voiricon/{id}
-    defaults: { _controller: JCLEMemoBundle:Memo:voirIcon }
+jclememo_prevoiricon:
+    pattern: /prevoiricon/{id}
+    defaults: { _controller: JCLEMemoBundle:Memo:prevoirIcon }
     options:
         expose: true
+        
+jclememo_voiricon:
+    pattern: /voiricon/{slug}
+    defaults: { _controller: JCLEMemoBundle:Memo:voirIcon }
     
 jclememo_suppricon:
     pattern: /suppricon/{id}

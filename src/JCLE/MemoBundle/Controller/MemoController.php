@@ -217,7 +217,7 @@ class MemoController extends Controller
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return redirect or render
      */
-    public function voirIconAction(Icon $icon, Request $request)
+    public function prevoirIconAction(Icon $icon, Request $request)
     {            
 //        $form = $this->createForm(new IconType(),$icon);
         $form = $this->createForm('jcle_memobundle_icon',$icon);
@@ -230,9 +230,15 @@ class MemoController extends Controller
 
                 $this->get('session')->getFlashBag()->add('info-warning', 'Icone modifiée');
 
-                return $this->redirect($this->generateUrl('jclememo_voiricon',array('id' => $icon->getId() )));
+//                return $this->redirect($this->generateUrl('jclememo_voiricon',array('slug' => $icon->getSlug() )));
             }
-        
+            
+        return $this->redirect($this->generateUrl('jclememo_voiricon',array('slug' => $icon->getSlug() )));
+    }
+    
+    public function voirIconAction(Icon $icon)
+    {
+        $form = $this->createForm('jcle_memobundle_icon',$icon);
         return $this->render('JCLEMemoBundle:Memo:voirIcon.html.twig', array(
             'form'  =>  $form->createView()
                 ,'id'   => $icon->getId()

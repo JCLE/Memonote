@@ -12,7 +12,7 @@
     <div class='pull-right'>
         <button onclick="ConfirmDelete('{{ path('jclememo_suppricon',{ 'id' :  id } ) }}','Voulez-vous vraiment supprimer cet icone ainsi que toutes les notes reliées à ce dernier ?');" class="btn btn-default btn-xs mini-icon"><span class="glyphicon glyphicon-trash"></span></button>
     </div>
-    <form method="POST" {{ form_enctype(form) }}  class="form-horizontal well">
+    <form method="POST" {{ form_enctype(form) }}  class="form-horizontal well" action="{{ path('jclememo_prevoiricon',{'id' : id }) }}">
             {{ form_errors(form) }}  
 {#        {{ dump(id) }}#}
             <div id="icon-actuel" class="form-group">
