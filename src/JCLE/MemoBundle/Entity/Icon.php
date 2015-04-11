@@ -57,6 +57,7 @@ class Icon
      *
      * @Assert\File(
      *      mimeTypes = {"image/png"}
+     *      ,mimeTypesMessage = "Choisissez un fichier PNG valide"
      * )
      */
     private $fichier;
@@ -106,17 +107,17 @@ class Icon
     // accesseur modifié en rajoutant la condition si un fichier existe déja
     public function setfichier(UploadedFile $fichier)
     {
-        if($fichier->getMimeType()=="image/png")
-        {
+//        if($fichier->getMimeType()=="image/png")
+//        {
             $this->fichier = $fichier;
             // si aucun fichier renseigné déja pour cet objet
             if(null !== $this->alt)
             {
                 $this->alt = null;
             }
-        }else{
-            throw new Exception('Format du fichier incorrect. Votre image doit être au format .png');
-        }
+//        }else{
+//            throw new Exception('Format du fichier incorrect. Votre image doit être au format .png');
+//        }
         
 
         return $this;

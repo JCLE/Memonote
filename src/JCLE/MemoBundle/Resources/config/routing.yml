@@ -69,3 +69,7 @@ jclememo_suppricon:
     defaults: { _controller: JCLEMemoBundle:Memo:supprIcon }
     options:
         expose: true
+        
+#jclememo_suppruser:
+#    pattern: /suppruser/{id}
+#    defaults: {_controller: JCLEMemoBundle:Memo:supprUser}

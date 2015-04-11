@@ -11,6 +11,7 @@ use JCLE\MemoBundle\JCLEMemoConst;
 
 use JCLE\MemoBundle\Entity\Note;
 use JCLE\MemoBundle\Entity\Icon;
+use JCLE\UserBundle\Entity\User;
 //use JCLE\MemoBundle\Form\NoteType;
 //use JCLE\MemoBundle\Form\IconType;
 //use JCLE\MemoBundle\Form\IconFileType;
@@ -200,7 +201,7 @@ class MemoController extends Controller
                     
                     $this->get('session')->getFlashBag()->add('info-succes', 'Icone ajoutée');
             
-                    return $this->redirect($this->generateUrl('jclememo_voiricon',array('id' => $icon->getId())));
+                    return $this->redirect($this->generateUrl('jclememo_voiricon',array('slug' => $icon->getSlug())));
 
                     // On redirige vers la page de visualisation de l'article nouvellement créé
 //                    return $this->redirect($this->generateUrl('sdzblog_voir', array('id' => $article->getId())));
@@ -219,7 +220,6 @@ class MemoController extends Controller
      */
     public function prevoirIconAction(Icon $icon, Request $request)
     {            
-//        $form = $this->createForm(new IconType(),$icon);
         $form = $this->createForm('jcle_memobundle_icon',$icon);
         $form->handleRequest($request);
             if ($form->isValid()) 
@@ -552,6 +552,11 @@ class MemoController extends Controller
                 return $this->redirect($this->generateUrl('jclememo_accueil'));
             }
         }
+        
+//        public function supprUserAction(User $user)
+//        {
+//            return new Response('<body>TODO: rendre accessible la suppression d\'utilisateur</body>');
+//        }
         
 //        public function filarianeAction(Note $note)
 //        {

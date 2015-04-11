@@ -95,6 +95,7 @@ class Note
      *
      * @ORM\ManyToMany(targetEntity="JCLE\MemoBundle\Entity\Note", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinTable(name="Lien")
      * @Assert\Valid()
      */
     private $notes;
@@ -109,7 +110,7 @@ class Note
 //   protected $noteTo;
 //
 //   /**
-//    * @ORM\ManyToMany(targetEntity="Note", inversedBy="noteTo")
+//    * @ORM\ManyToMany(targetEntity="note", inversedBy="noteTo")
 //    * @ORM\JoinTable(name="liens",
 //    *      joinColumns={@ORM\JoinColumn(name="note_id", referencedColumnName="id")},
 //    *      inverseJoinColumns={@ORM\JoinColumn(name="note_link", referencedColumnName="id")}

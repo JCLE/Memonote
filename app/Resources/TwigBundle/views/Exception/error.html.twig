@@ -1,0 +1,12 @@
+
+{% extends "JCLEMemoBundle::layout.html.twig" %}
+
+{% block jclememo_body %}
+    <div class="row">
+        <div class="well text-center">
+            <h1><span class="label-warning">Une erreur est survenue</span></h1>
+            <h2>Le serveur a retourné une erreur "{{ status_code }} {{ status_text }}".</h2>
+            <a href="{{ path('jclememo_accueil') }}" class="btn btn-default">Retour à l'accueil</a>
+        </div>
+    </div>
+{% endblock %}

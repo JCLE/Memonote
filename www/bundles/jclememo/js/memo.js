@@ -4,7 +4,7 @@
 $(document).ready(function(){
 
     // Disparition auto du message flash renvoyé par le controleur
-    $('.flash_message').delay(2000).slideUp(1000);
+    $('.flash_message').delay(6000).slideUp(1000);
     
     if($("#jcle_memobundle_note_description").length) // S'il existe
     {
@@ -20,7 +20,12 @@ $(document).ready(function(){
             }
     });
     }
-    
+      
+//      var ext = $('#jcle_memobundle_iconfile_fichier').val().split('.').pop().toLowerCase();
+//        if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+//            alert('invalid extension!');
+//        }
+//    
 //    console.log($('.panel-heading').width());
 //    
 //    $( window ).resize(function() {
@@ -37,12 +42,6 @@ $(document).ready(function(){
 
 // *************************** Partie Chargement d'icones  *************************** 
 
-$(window).load(function()
-{
-    ChargeImg();
-//    $('#icon-change').hide(); 
-});
-
 $('.target-img').change(function()
 {
     ChargeImg();
@@ -51,7 +50,7 @@ $('.target-img').change(function()
 function ChargeImg ()
 {
     var timestamp = Math.round(+new Date() / 1000);
-    $('#recept-img').html('<img id=\"icon\" src="'+pathImgDirectory+$('.target-img').val()+'.png'+timestamp+'" alt="'+$('.target-img').val()+'" /></img>');
+    $('#recept-img').html('<img id=\"icon\" src="'+pathImgDirectory+$('.target-img').val()+'.png?time='+timestamp+'" alt="'+$('.target-img').val()+'" /></img>');
 }
 
 $('.icon-edit').click(function()
@@ -60,20 +59,37 @@ $('.icon-edit').click(function()
     $('#icon-change').show();   
 });
 
-function resizeImage(image)
+$(window).load(function()
 {
-    if($(image).width()>$('.panel-heading').width())
-    {
-        $(image).addClass('col-lg-12 col-md-12 col-sm-12 col-xs-12');
-    }
-    else
-    {
-        $(image).addClass('img-responsive');
-    }
-}
+    // Charge icone dans la page de création/modification des notes
+    ChargeImg();
+    // Envoi d'un tableau de toutes les images de la page a redimensionner
+    resizeImage($('.resize-image'));
+});
+
 
 //  *************************** Fin Partie chargement icones  *************************** 
 
+
+/**
+ * Redimensionne (ou défini juste un format responsive) les images du tableau
+ * si la dimension dépasse celle du panel-heading
+ * @param {type} images
+ */
+function resizeImage(images)
+{
+    for (var i=0;i<images.length;i++)
+    {
+        if($(images[i]).width()>$('.panel-heading').width())
+        {
+            $(images[i]).addClass('col-lg-12 col-md-12 col-sm-12 col-xs-12');
+        }
+        else
+        {
+            $(images[i]).addClass('img-responsive');
+        }
+    }
+}
 
 
 /**
@@ -107,76 +123,15 @@ function GenererRoute (aRoute,aValue)
     window.location.href=Routing.generate( aRoute,{ id : aValue } );
 }
 
-
-//$('#icon-edit').on('click',function ()
-//{ 
-//    alert('clické');
-//});
-
-//var route = "{{ path('post_display', { 'id': PLACEHOLDER }) }}";
-//window.location = route.replace("PLACEHODER", js_variable);
-
-
-//$(document).ready(function() {
-//
-//    // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
-//    var $container = $('div#jcle_memobundle_note_notes');
-//
-//    // On ajoute un lien pour ajouter une nouvelle catégorie
-//    var $addLink = $('<a href="#" id="add_link" class="btn btn-default">Ajouter un lien</a>');
-//    $container.append($addLink);
-//
-//    // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
-//    $addLink.click(function(e) {
-//      addCategory($container);
-//      e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-//      return false;
-//    });
-//
-//    // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
-//    var index = $container.find(':input').length;
-//
-//    // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
-//    if (index == 0) {
-//      addCategory($container);
-//    } else {
-//      // Pour chaque catégorie déjà existante, on ajoute un lien de suppression
-//      $container.children('div').each(function() {
-//        addDeleteLink($(this));
-//      });
-//    }
-//
-//    // La fonction qui ajoute un formulaire Categorie
-//    function addCategory($container) {
-//      // Dans le contenu de l'attribut « data-prototype », on remplace :
-//      // - le texte "__name__label__" qu'il contient par le label du champ
-//      // - le texte "__name__" qu'il contient par le numéro du champ
-//      var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Lien n°' + (index+1))
-//          .replace(/__name__/g, index));
-//
-//      // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
-//      addDeleteLink($prototype);
-//
-//      // On ajoute le prototype modifié à la fin de la balise <div>
-//      $container.append($prototype);
-//
-//      // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
-//      index++;
-//    }
-//
-//    // La fonction qui ajoute un lien de suppression d'une catégorie
-//    function addDeleteLink($prototype) {
-//      // Création du lien
-//      $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
-//
-//      // Ajout du lien
-//      $prototype.append($deleteLink);
-//
-//      // Ajout du listener sur le clic du lien
-//      $deleteLink.click(function(e) {
-//        $prototype.remove();
-//        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-//        return false;
-//      });
-//    }
-//  });
+    jQuery.validator.setDefaults({
+        debug: true,
+        success: "valid"
+      });
+      $( "#jcle_memobundle_iconfile_fichier" ).validate({
+        rules: {
+          field: {
+            required: true,
+            extension: "png"
+          }
+        }
+      });

@@ -3,6 +3,8 @@
 <div class="fos_user_user_show well text-center">
     <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
     <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
+{#    <p><strong><code><a href='{{ path('jclememo_suppruser',{ 'id' : user.id }) }}'>Supprimer ce compte</a></code></strong></p>
+    {{ dump(user) }}#}
     <a class='btn btn-default' href='{{ path('fos_user_profile_edit') }}'>Modifier</a>
     <a href='{{ path('jclememo_accueil') }}'>Retour</a>
 </div>

@@ -63,13 +63,12 @@
            {% javascripts output='js/compiled/main.js'  filter='yui_js'
                         'js/jquery.js'
                         'js/jquery-ui.js'
+                        'markitup/jquery.markitup.js'
+                        'markitup/sets/BBCode/set.js'
                         '@JCLEMemoBundle/Resources/public/js/*'
                         'js/shCore.js'
                         'js/bootstrap.js'
-                        'js/brushesSH/*'
-                        'markitup/jquery.markitup.js'
-                        'markitup/sets/BBCode/set.js'
-                        
+                        'js/brushesSH/*'         
         %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
