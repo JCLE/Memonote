@@ -39,6 +39,10 @@ var mySettings = {
                 {name:'Bloc notes', openWith:'[bloc]', closeWith:'[/bloc]', className:'bloc-notes' },
 		{name:'Lien', key:'L', openWith:'[url=[![Lien:!:http://]!](!( title="[![Title]!]")!)]', closeWith:'[/url]', placeHolder:'Le texte du lien...' ,className:'lien'},
                 {name:'Touche du clavier', openWith:'[kbd]', closeWith:'[/kbd]' ,className:'kbd'},
+                 // Added by CF Mitrah
+//                {name:'Upload', key:'M',beforeInsert:function(markItUp){InlineUpload.display(markItUp,true)}},
+//                {name:'Browse', key:'F',beforeInsert:function(markItUp){InlineUpload.display(markItUp,false)}},
+                // Added by CF Mitrah
 		{separator:'---------------' },
                 {name:'Php', openWith:'[php]', closeWith:'[/php]' ,className:'php'},
                 {name:'C#', openWith:'[csharp]', closeWith:'[/csharp]' ,className:'csharp'},

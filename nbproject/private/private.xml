@@ -3,10 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/Users/DragonBleu/Documents/MAMP/Memonote/src/JCLE/MemoBundle/Resources/public/js/memo.js</file>
             <file>file:/Users/DragonBleu/Documents/MAMP/Memonote/src/JCLE/UserBundle/Resources/views/Profile/show_content.html.twig</file>
-            <file>file:/Users/DragonBleu/Documents/MAMP/Memonote/src/JCLE/UserBundle/Resources/views/Profile/edit_content.html.twig</file>
             <file>file:/Users/DragonBleu/Documents/MAMP/Memonote/src/JCLE/MemoBundle/Resources/config/routing.yml</file>
+            <file>file:/Users/DragonBleu/Documents/MAMP/Memonote/src/JCLE/UserBundle/Entity/User.php</file>
             <file>file:/Users/DragonBleu/Documents/MAMP/Memonote/src/JCLE/MemoBundle/Controller/MemoController.php</file>
+            <file>file:/Users/DragonBleu/Documents/MAMP/Memonote/src/JCLE/MemoBundle/Entity/Note.php</file>
+            <file>file:/Users/DragonBleu/Documents/MAMP/Memonote/src/JCLE/MemoBundle/Resources/views/Memo/ajoutIcon.html.twig</file>
+            <file>file:/Users/DragonBleu/Documents/MAMP/Memonote/src/JCLE/MemoBundle/Entity/Icon.php</file>
         </group>
     </open-files>
 </project-private>
