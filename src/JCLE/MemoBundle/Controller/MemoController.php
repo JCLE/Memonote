@@ -11,7 +11,7 @@ use JCLE\MemoBundle\JCLEMemoConst;
 
 use JCLE\MemoBundle\Entity\Note;
 use JCLE\MemoBundle\Entity\Icon;
-use JCLE\UserBundle\Entity\User;
+//use JCLE\UserBundle\Entity\User;
 //use JCLE\MemoBundle\Form\NoteType;
 //use JCLE\MemoBundle\Form\IconType;
 //use JCLE\MemoBundle\Form\IconFileType;

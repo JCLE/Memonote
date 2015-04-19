@@ -31,8 +31,21 @@ textarea
     height: 70px;
     margin-top: 5px;
 }
+
+.centrer
+{
+    margin-left: auto;
+    margin-right: auto
+}
+
+body
+{
+    background-color: #F5F5F5;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
 // Customisation des boutons clavier :p
-/*kbd
+kbd
 {
     -moz-border-radius:3px;
     -moz-box-shadow:0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;
@@ -50,7 +63,7 @@ textarea
     margin:0 .1em;
     padding:.1em .6em;
     text-shadow:0 1px 0 #fff;
-}*/
+}
 
 .table tbody>tr>td{
     vertical-align: middle;

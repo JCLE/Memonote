@@ -146,8 +146,9 @@ class Icon
         }
 
         // Et on génère l'attribut alt de la balise <img>, à la valeur du nom du fichier sur le PC de l'internaute
-        // tout en retirant le .png
-        $this->alt = str_replace('.png','',strtolower($this->fichier->getClientOriginalName()));
+        // tout en retirant le .png 
+        // Puis en mettant en en majuscule la première lettre de tous les mots
+        $this->alt = ucwords(str_replace('.png','',strtolower($this->fichier->getClientOriginalName())));
     }
     
     /**

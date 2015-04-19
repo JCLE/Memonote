@@ -122,16 +122,16 @@ function GenererRoute (aRoute,aValue)
 {
     window.location.href=Routing.generate( aRoute,{ id : aValue } );
 }
-
-    jQuery.validator.setDefaults({
-        debug: true,
-        success: "valid"
-      });
-      $( "#jcle_memobundle_iconfile_fichier" ).validate({
-        rules: {
-          field: {
-            required: true,
-            extension: "png"
-          }
-        }
-      });
+//
+//    jQuery.validator.setDefaults({
+//        debug: true,
+//        success: "valid"
+//      });
+//      $( "#jcle_memobundle_iconfile_fichier" ).validate({
+//        rules: {
+//          field: {
+//            required: true,
+//            extension: "png"
+//          }
+//        }
+//      });

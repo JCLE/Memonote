@@ -100,7 +100,7 @@ class RegistrationController extends BaseController
         $fileCopy = $directory.'uploads/icon/'.$idFile.'.png';
         copy($filePath,$fileCopy);
         $File = new File($fileCopy);
-        $fileUploaded = new UploadedFile($File, 'note', null, null, null, true); // TODO : une fois en ligne delete les 3 null et true car specifie juste que le fichier est situé localement
+        $fileUploaded = new UploadedFile($File, 'Note', null, null, null, true); // TODO : une fois en ligne delete les 3 null et true car specifie juste que le fichier est situé localement
         $icon->setfichier($fileUploaded);
         $icon->setCreateur($user);
         $icon->setAlt($idFile);

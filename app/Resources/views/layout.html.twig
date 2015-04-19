@@ -2,6 +2,22 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{ asset('img/favicons/apple-touch-icon-57x57.png') }}"> <!-- avec effet : apple-touch-icon  -->
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="{{ asset('img/favicons/apple-touch-icon-60x60.png') }}"> <!-- sans effet : apple-touch-icon-precomposed  -->
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('img/favicons/apple-touch-icon-72x72.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="{{ asset('img/favicons/apple-touch-icon-76x76.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('img/favicons/apple-touch-icon-114x114.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="{{ asset('img/favicons/apple-touch-icon-120x120.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('img/favicons/apple-touch-icon-144x144.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{{ asset('img/favicons/apple-touch-icon-152x152.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('img/favicons/favicon-32x32.png') }}" sizes="32x32">
+    <link rel="icon" type="image/png" href="{{ asset('img/favicons/favicon-96x96.png') }}" sizes="96x96">
+    <link rel="icon" type="image/png" href="{{ asset('img/favicons/favicon-16x16.png') }}" sizes="16x16">
+    <link rel="manifest" href="{{ asset('img/favicons/manifest.json') }}">
+    <meta name="msapplication-TileColor" content="#b91d47">
+    <meta name="msapplication-TileImage" content="{{ asset('img/favicons/mstile-144x144.png') }}">
+    <meta name="theme-color" content="#ffffff">
 
     <title>{% block title %}Memonote{% endblock %}</title>
         
@@ -14,11 +30,11 @@
     {% endblock %}#}
     
     {% stylesheets  filter='cssrewrite' output='css/compiled/main.css'  filter='yui_css'
-                    '@JCLEMemoBundle/Resources/public/css/style.css'
                     'css/jquery-ui.min.css'
                     'css/shCore.css'
                     'css/shThemeDefault.css'
                     'css/bootstrap.css'
+                    '@JCLEMemoBundle/Resources/public/css/style.css'
                     'markitup/skins/simple/style.css'
                     'markitup/sets/BBCode/style.css' 
     %}
@@ -36,8 +52,8 @@
 <body>
     
     <div class="container">
-        <div class="row">
-            <h1 class="text-center"><a href="{{ path("jclememo_accueil") }}" tabindex="-1">Memonote</a></h1> 
+        <div class="row text-center">
+            <a href="{{ path("jclememo_accueil") }}" tabindex="-1"><img class="img-responsive img-thumbnail centrer" src="{{ asset('bundles/jclememo/images/banniere.jpeg') }}" alt="banniere de memonote"/></a>
         </div>
     
         {% block body %}
@@ -63,20 +79,23 @@
            {% javascripts output='js/compiled/main.js'  filter='yui_js'
                         'js/jquery.js'
                         'js/jquery-ui.js'
-                        'markitup/jquery.markitup.js'
-                        'markitup/sets/BBCode/set.js'
+                        'markitup/*'
+
+                        'markitup/sets/BBCode/set.js'                      
                         '@JCLEMemoBundle/Resources/public/js/*'
                         'js/shCore.js'
                         'js/bootstrap.js'
                         'js/brushesSH/*'         
         %}
+{#                                'markitup/jquery.markitup.js'        #}
             <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
         <script type="text/javascript">
             var pathImgDirectory = "{{ asset('uploads/icon/') }}";
                 SyntaxHighlighter.all();
             SyntaxHighlighter.config.stripBrs = true;
-       </script>
+        </script>
+
 {#            <script type="text/javascript">
                 SyntaxHighlighter.autoloader(
                 ['js','jscript','javascript','{{ asset('js/compiled/main.js') }}'],
